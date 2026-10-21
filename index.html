@@ -947,7 +947,7 @@ const state = {
   cfg: Object.assign({}, DEFAULT_CFG),
   filterCat: 'Semua', openSess: null, claimCert: null,
   donAmount: 0, reqPick: new Set(), loginMode: 'pin', adminAuthed: false, adminEmail: '', admTab: 'dash',
-  editing: {sesi:null, modul:null, media:null}
+  editing: {sesi:null, modul:null, media:null, testi:null}
 };
 
 /* ---------------- Supabase engine (dual mode) ---------------- */
@@ -1959,15 +1959,32 @@ function renderAdmDon(M) {
 }
 /* ---- testimoni ---- */
 function renderAdmTesti(M) {
-  M.innerHTML = '<h3>💬 Testimoni</h3><p class="sub">Sembunyikan atau hapus testimoni yang masuk.</p>' +
-    '<table class="tbl"><thead><tr><th>Testimoni</th><th>Rating</th><th>Status</th><th style="width:190px">Aksi</th></tr></thead><tbody id="admTestiRows"></tbody></table>';
+  M.innerHTML = '<h3>💬 Testimoni</h3><p class="sub">Tambahkan, sunting, sembunyikan, atau hapus testimoni. Kiriman pengunjung masuk otomatis ke daftar ini — perubahan tersinkron realtime ke semua perangkat (mode Cloud).</p>' +
+    '<div class="form-card"><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">' +
+      '<button class="btn btn-teal" id="btnAtAdd">➕ Tambah Testimoni</button>' +
+      '<span class="hint">Testimoni tampil di beranda (maks. 8 terbaru yang tidak disembunyikan).</span></div></div>' +
+    '<div class="form-card" id="atFormCard" style="display:none">' +
+      '<h4 id="atFormTitle">➕ Tambah Testimoni</h4>' +
+      '<div class="f-row"><div><label class="f-lab">Nama *</label><input class="f-in" id="atName" placeholder="cth. Budi Santoso"></div>' +
+      '<div><label class="f-lab">Rating</label><select class="f-in" id="atRating"><option value="5">★★★★★ (5)</option><option value="4">★★★★ (4)</option><option value="3">★★★ (3)</option><option value="2">★★ (2)</option><option value="1">★ (1)</option></select></div></div>' +
+      '<div class="f-row"><div><label class="f-lab">Peran</label><input class="f-in" id="atRole" placeholder="cth. Guru SMP"></div>' +
+      '<div><label class="f-lab">Sekolah / Instansi</label><input class="f-in" id="atOrg" placeholder="cth. SMPN 2 Harapan"></div></div>' +
+      '<label class="f-lab">Isi testimoni *</label><textarea class="f-in" id="atContent" rows="3" placeholder="Tulis pengalaman/kesan pelatihan…"></textarea>' +
+      '<div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-teal" id="btnAtSave">💾 Simpan</button>' +
+      '<button class="btn btn-line" id="btnAtCancel">Batal</button></div></div>' +
+    '<table class="tbl"><thead><tr><th>Testimoni</th><th>Rating</th><th>Status</th><th style="width:250px">Aksi</th></tr></thead><tbody id="admTestiRows"></tbody></table>';
+  qs('#btnAtAdd').onclick = () => admTestiForm(null);
+  qs('#btnAtSave').onclick = admTestiSave;
+  qs('#btnAtCancel').onclick = () => { state.editing.testi = null; qs('#atFormCard').style.display = 'none'; };
   qs('#admTestiRows').innerHTML = state.testis.map(t =>
     '<tr><td><b>' + esc(t.name) + '</b> <span class="hint">(' + esc(t.role || '') + ' · ' + esc(t.org || '') + ')</span><br><span style="font-size:12.5px">' + esc(t.content) + '</span></td>' +
     '<td>' + '★'.repeat(Number(t.rating || 5)) + '</td>' +
     '<td><span class="badge ' + (t.approved !== false ? 'ok' : 'off') + '">' + (t.approved !== false ? 'Tampil' : 'Disembunyikan') + '</span></td>' +
     '<td><div class="row-acts">' +
+      '<button class="btn btn-line btn-sm" data-ed="' + esc(t.id) + '">✏️ Edit</button>' +
       '<button class="btn btn-line btn-sm" data-tg="' + esc(t.id) + '">' + (t.approved !== false ? '🙈 Sembunyikan' : '👁 Tampilkan') + '</button>' +
       '<button class="btn btn-danger btn-sm" data-del="' + esc(t.id) + '">Hapus</button></div></td></tr>').join('');
+  qsa('#admTestiRows [data-ed]').forEach(b => b.onclick = () => admTestiForm(state.testis.find(x => x.id === b.dataset.ed)));
   qsa('#admTestiRows [data-tg]').forEach(b => b.onclick = async () => {
     const t = state.testis.find(x => x.id === b.dataset.tg);
     try { await SB.update('testis', b.dataset.tg, {approved: !(t.approved !== false)}); toast('Status testimoni diubah', 'ok'); await refreshAll(); admTab('testi'); }
@@ -1978,6 +1995,35 @@ function renderAdmTesti(M) {
     try { await SB.remove('testis', b.dataset.del); toast('Testimoni dihapus', 'ok'); await refreshAll(); admTab('testi'); }
     catch(e) { toast(e.message, 'err'); }
   });
+}
+/* Task 14: form tambah/sunting testimoni dari panel admin */
+function admTestiForm(t) {
+  state.editing.testi = t ? t.id : null;
+  qs('#atFormCard').style.display = '';
+  qs('#atFormTitle').textContent = t ? '✏️ Edit Testimoni' : '➕ Tambah Testimoni';
+  qs('#atName').value = t ? (t.name || '') : '';
+  qs('#atRating').value = String(t ? (t.rating || 5) : 5);
+  qs('#atRole').value = t ? (t.role || '') : '';
+  qs('#atOrg').value = t ? (t.org || '') : '';
+  qs('#atContent').value = t ? (t.content || '') : '';
+  qs('#atFormCard').scrollIntoView({behavior: 'smooth', block: 'nearest'});
+  try { qs('#atName').focus(); } catch(e) {}
+}
+async function admTestiSave() {
+  const name = qs('#atName').value.trim(), content = qs('#atContent').value.trim();
+  if (!name || !content) { toast('Nama dan isi testimoni wajib diisi', 'warn'); return; }
+  const obj = {name, role: qs('#atRole').value.trim(), org: qs('#atOrg').value.trim(), rating: Number(qs('#atRating').value), content};
+  try {
+    if (state.editing.testi) {
+      await SB.update('testis', state.editing.testi, obj);
+      toast('Testimoni diperbarui ✏️', 'ok');
+    } else {
+      await SB.insert('testis', Object.assign({approved: true, created_at: new Date().toISOString()}, obj));
+      toast('Testimoni ditambahkan ✅', 'ok');
+    }
+    state.editing.testi = null;
+    await refreshAll(); admTab('testi');
+  } catch(e) { toast(e.message, 'err'); }
 }
 
 /* ---- SERTIFIKAT (admin) ---- */
