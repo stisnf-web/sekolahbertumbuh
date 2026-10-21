@@ -1,0 +1,2285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduNusa — Pelatihan Guru & Pengembangan Aplikasi Pendidikan</title>
+<meta name="description" content="EduNusa: platform pelatihan guru berbasis donasi + jasa pengembangan aplikasi pendidikan. Ikuti pelatihan, berdonasi sukarela, unduh sertifikat.">
+<link id="favicon" rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f766e'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'%3EE%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============ EduNusa v2.0 — base & site ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --teal:#0f766e; --teal-d:#115e59; --teal-l:#14b8a6; --teal-bg:#f0fdfa;
+  --amber:#f59e0b; --amber-d:#b45309;
+  --ink:#0f172a; --ink2:#334155; --mut:#64748b; --mut2:#94a3b8;
+  --line:#e2e8f0; --bg:#f8fafc; --card:#ffffff; --warn-bg:#fffbeb; --ok:#059669; --err:#dc2626;
+  --rad:16px; --rad-s:10px; --shadow:0 4px 18px rgba(15,23,42,.07); --shadow-l:0 12px 40px rgba(15,23,42,.14);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:15.5px}
+img{max-width:100%}
+a{color:var(--teal);text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:14.5px;color:var(--ink)}
+.container{max-width:1120px;margin:0 auto;padding:0 20px}
+/* ---- topbar ---- */
+#siteHeader{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar{display:flex;align-items:center;gap:18px;height:66px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand img.brand-logo{width:40px;height:40px;border-radius:10px;object-fit:cover;box-shadow:0 2px 8px rgba(15,118,110,.25)}
+.brand-mark{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--teal),var(--teal-l));color:#fff;font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(15,118,110,.3);flex:none}
+.brand-name{font-weight:800;font-size:19px;color:var(--ink);letter-spacing:-.3px;white-space:nowrap}
+.brand-name span{color:var(--teal)}
+.brand-sub{font-size:10.5px;color:var(--mut);margin-top:-3px;white-space:nowrap}
+nav.mainnav{display:flex;gap:4px;margin-left:auto;align-items:center}
+nav.mainnav a{padding:8px 12px;border-radius:9px;color:var(--ink2);font-weight:600;font-size:14px}
+nav.mainnav a:hover{background:var(--teal-bg);color:var(--teal-d)}
+#syncBadge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;padding:5px 11px;border-radius:999px;background:#f1f5f9;color:var(--mut);border:1px solid var(--line);white-space:nowrap}
+#syncBadge.cloud{background:var(--teal-bg);color:var(--teal-d);border-color:#99f6e4}
+#btnAdminTop{background:var(--teal);color:#fff;border:none;padding:8px 15px;border-radius:9px;font-weight:700;font-size:13.5px}
+#btnAdminTop:hover{background:var(--teal-d)}
+.burger{display:none;background:none;border:none;font-size:24px;color:var(--ink);padding:4px 8px}
+/* ---- hero ---- */
+.hero{background:linear-gradient(135deg,#134e4a 0%,var(--teal-d) 45%,var(--teal) 100%);color:#fff;padding:72px 0 84px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-140px;top:-140px;width:460px;height:460px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero::after{content:'';position:absolute;left:-90px;bottom:-190px;width:380px;height:380px;border-radius:50%;background:rgba(245,158,11,.12)}
+.hero .container{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:7px 15px;border-radius:999px;font-size:12.5px;font-weight:700;letter-spacing:.4px;margin-bottom:18px}
+.hero h1{font-size:44px;line-height:1.14;font-weight:800;letter-spacing:-1px;margin-bottom:16px}
+.hero h1 em{font-style:normal;color:#fde68a}
+.hero p.lead{font-size:17px;color:#ccfbf1;max-width:520px;margin-bottom:26px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:12px;padding:12px 22px;font-weight:700;font-size:14.5px;transition:.18s}
+.btn-amber{background:var(--amber);color:#422006}
+.btn-amber:hover{background:#fbbf24;transform:translateY(-1px)}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35)}
+.btn-ghost:hover{background:rgba(255,255,255,.2)}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-teal:hover{background:var(--teal-d)}
+.btn-line{background:#fff;color:var(--teal-d);border:1.5px solid var(--teal)}
+.btn-line:hover{background:var(--teal-bg)}
+.btn-danger{background:#fee2e2;color:var(--err)}
+.btn-danger:hover{background:#fecaca}
+.btn-sm{padding:7px 13px;font-size:12.5px;border-radius:9px}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.hero-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:24px;backdrop-filter:blur(6px)}
+.hero-card h3{font-size:15px;margin-bottom:14px;color:#99f6e4}
+.hero-card ul{list-style:none}
+.hero-card li{display:flex;gap:10px;padding:8px 0;font-size:14px;color:#f0fdfa;border-bottom:1px dashed rgba(255,255,255,.15)}
+.hero-card li:last-child{border-bottom:none}
+.hero-card li b{color:#fde68a}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:-42px;position:relative;z-index:5}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);box-shadow:var(--shadow);padding:18px;text-align:center}
+.stat b{display:block;font-size:26px;color:var(--teal);font-weight:800}
+.stat span{font-size:12.5px;color:var(--mut);font-weight:600}
+/* ---- sections ---- */
+section.sec{padding:64px 0}
+section.sec.alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sec-head{text-align:center;max-width:640px;margin:0 auto 36px}
+.sec-kicker{display:inline-block;font-size:12px;font-weight:800;letter-spacing:1.6px;color:var(--amber-d);background:var(--warn-bg);border:1px solid #fde68a;padding:5px 14px;border-radius:999px;margin-bottom:12px}
+.sec-head h2{font-size:30px;font-weight:800;letter-spacing:-.5px;margin-bottom:10px}
+.sec-head p{color:var(--mut);font-size:15px}
+/* ---- chips & session cards ---- */
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:26px}
+.chip{background:#fff;border:1.5px solid var(--line);color:var(--ink2);padding:7px 16px;border-radius:999px;font-size:13px;font-weight:700}
+.chip.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.grid{display:grid;gap:20px}
+.grid.sessions{grid-template-columns:repeat(3,1fr)}
+.grid.mods{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);box-shadow:var(--shadow);overflow:hidden;transition:.18s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-l)}
+.sess-body{padding:18px;flex:1;display:flex;flex-direction:column;gap:10px}
+.sess-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--teal-bg);color:var(--teal-d);border:1px solid #99f6e4}
+.tag.lev{background:var(--warn-bg);color:var(--amber-d);border-color:#fde68a}
+.tag.done{background:#fee2e2;color:#b91c1c;border-color:#fecaca}
+.card h3{font-size:17.5px;font-weight:800;line-height:1.3;letter-spacing:-.2px}
+.meta2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.meta2 div{background:var(--bg);border-radius:var(--rad-s);padding:8px 10px}
+.meta2 .k{font-size:10px;font-weight:800;letter-spacing:1px;color:var(--mut2)}
+.meta2 .v{font-size:13.5px;font-weight:700;color:var(--ink)}
+.meta2 .v small{display:block;font-weight:500;color:var(--mut);font-size:11.5px}
+.quota{font-size:12.5px;font-weight:700;color:var(--amber-d);background:var(--warn-bg);border:1px solid #fde68a;border-radius:9px;padding:7px 11px}
+.mat-preview{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:var(--rad-s);padding:10px 12px;font-size:12.5px;color:#065f46}
+.card .foot{padding:0 18px 18px;margin-top:auto}
+.card .foot .btn{width:100%}
+</style>
+<style>
+/* ============ EduNusa v2.0 — modules, donasi, testi, blog, footer ============ */
+.mod-card{padding:18px}
+.mod-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.mod-ico{width:42px;height:42px;border-radius:11px;background:var(--teal-bg);display:flex;align-items:center;justify-content:center;font-size:21px;flex:none}
+.price{font-weight:800;color:var(--teal-d);font-size:16px;white-space:nowrap}
+.mod-card p{font-size:13px;color:var(--mut);margin:6px 0 12px;flex:1}
+.mod-feats{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.mod-feats span{font-size:11px;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:3px 8px;color:var(--ink2)}
+.disc-note{margin-top:26px;background:linear-gradient(120deg,#ecfdf5,#fefce8);border:1px solid #a7f3d0;border-radius:var(--rad);padding:18px 22px;display:flex;gap:14px;align-items:flex-start}
+.disc-note b{color:var(--teal-d)}
+.disc-note ul{list-style:none;margin-top:6px}
+.disc-note li{font-size:13px;color:var(--ink2);padding:2px 0}
+/* ---- services / request ---- */
+.svc-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:start}
+.svc-pick{background:#fff;border:1px solid var(--line);border-radius:var(--rad);box-shadow:var(--shadow);padding:20px}
+.svc-pick h3,.svc-form h3{font-size:16px;font-weight:800;margin-bottom:12px}
+.pick-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:330px;overflow:auto;padding-right:4px}
+.pick-item{display:flex;gap:9px;align-items:center;border:1.5px solid var(--line);border-radius:var(--rad-s);padding:9px 11px;cursor:pointer;background:#fff;transition:.15s}
+.pick-item:hover{border-color:var(--teal-l)}
+.pick-item.on{border-color:var(--teal);background:var(--teal-bg)}
+.pick-item input{accent-color:var(--teal)}
+.pick-item .t{font-size:12.5px;font-weight:700;line-height:1.3}
+.pick-item .p{font-size:11px;color:var(--teal-d);font-weight:800;white-space:nowrap;margin-left:auto}
+.req-sum{margin-top:14px;border-top:2px dashed var(--line);padding-top:12px;font-size:13.5px}
+.req-sum .row{display:flex;justify-content:space-between;padding:3px 0;color:var(--ink2)}
+.req-sum .row.total{font-weight:800;font-size:15px;color:var(--teal-d);border-top:1px solid var(--line);margin-top:6px;padding-top:9px}
+.svc-form{background:#fff;border:1px solid var(--line);border-radius:var(--rad);box-shadow:var(--shadow);padding:20px}
+/* ---- forms ---- */
+.f-lab{display:block;font-size:12px;font-weight:800;letter-spacing:.6px;color:var(--ink2);margin:12px 0 5px}
+.f-in{width:100%;border:1.5px solid var(--line);border-radius:var(--rad-s);padding:10px 13px;background:#fff;transition:.15s}
+.f-in:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,148,136,.14)}
+textarea.f-in{resize:vertical;min-height:74px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* ---- donasi ---- */
+.don-wrap{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+.don-box{background:#fff;border:1px solid var(--line);border-radius:var(--rad);box-shadow:var(--shadow);padding:22px}
+.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:6px}
+.preset{border:1.5px solid var(--line);background:#fff;border-radius:var(--rad-s);padding:11px 6px;font-weight:800;font-size:13.5px;color:var(--ink2);transition:.15s}
+.preset:hover{border-color:var(--teal-l)}
+.preset.on{border-color:var(--teal);background:var(--teal-bg);color:var(--teal-d)}
+.preset small{display:block;font-size:10px;font-weight:600;color:var(--mut2)}
+.chart-box{margin-top:18px}
+.chart-box h4{font-size:13.5px;margin-bottom:8px;color:var(--ink2)}
+#donChart{width:100%;height:auto;display:block}
+.bank-box{background:var(--teal-bg);border:1px dashed #5eead4;border-radius:var(--rad-s);padding:13px 15px;font-size:13.5px;margin-top:12px;color:#134e4a}
+/* ---- testi & blog ---- */
+.grid.testis{grid-template-columns:repeat(4,1fr)}
+.testi{padding:18px}
+.stars{color:var(--amber);font-size:14px;letter-spacing:2px;margin-bottom:8px}
+.testi p{font-size:13px;color:var(--ink2);font-style:italic;flex:1}
+.testi .who{display:flex;align-items:center;gap:10px;margin-top:12px}
+.ava{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal-l));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;flex:none}
+.who b{font-size:13.5px;display:block}
+.who span{font-size:11.5px;color:var(--mut)}
+.grid.posts{grid-template-columns:repeat(3,1fr)}
+.post-body{padding:18px;flex:1;display:flex;flex-direction:column;gap:8px}
+.post-cat{font-size:10.5px;font-weight:800;letter-spacing:1px;color:var(--teal-d)}
+.post-body h3{font-size:16.5px}
+.post-body p{font-size:13px;color:var(--mut);flex:1}
+.post-meta{font-size:11.5px;color:var(--mut2);display:flex;gap:12px}
+/* ---- faq ---- */
+.faq{max-width:720px;margin:0 auto}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:var(--rad-s);margin-bottom:10px;overflow:hidden}
+.faq summary{cursor:pointer;font-weight:700;font-size:14.5px;padding:14px 18px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.faq summary::after{content:'+';font-size:20px;color:var(--teal);font-weight:800}
+.faq details[open] summary::after{content:'–'}
+.faq details p{padding:0 18px 15px;color:var(--mut);font-size:13.5px}
+/* ---- footer ---- */
+footer{background:#0f172a;color:#cbd5e1;padding:52px 0 0;margin-top:30px}
+.foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:30px;padding-bottom:34px}
+.foot-grid h4{color:#fff;font-size:14.5px;margin-bottom:13px}
+.foot-grid p,.foot-grid a{font-size:13px;color:#94a3b8;display:block;padding:3px 0}
+.foot-grid a:hover{color:#5eead4}
+.foot-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.foot-brand img{width:36px;height:36px;border-radius:9px;object-fit:cover}
+.foot-brand .brand-mark{width:36px;height:36px;font-size:19px;border-radius:9px}
+.foot-brand b{color:#fff;font-size:17px}
+.foot-brand b span{color:#2dd4bf}
+.foot-bot{border-top:1px solid #1e293b;padding:16px 0;text-align:center;font-size:12px;color:#64748b}
+.wa-float{position:fixed;right:20px;bottom:20px;z-index:70;width:56px;height:56px;border-radius:50%;background:#22c55e;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(34,197,94,.45);transition:.18s}
+.wa-float:hover{transform:scale(1.08)}
+.wa-float svg{width:30px;height:30px;fill:#fff}
+/* ============ modals ============ */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.62);backdrop-filter:blur(3px);z-index:100;display:none;align-items:flex-start;justify-content:center;padding:38px 16px;overflow:auto}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:760px;box-shadow:var(--shadow-l);animation:pop .22s ease;overflow:hidden;margin:auto}
+@keyframes pop{from{transform:translateY(14px) scale(.985);opacity:0}to{transform:none;opacity:1}}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:22px 24px 16px;border-bottom:1px solid var(--line)}
+.modal-head h2{font-size:21px;font-weight:800;letter-spacing:-.3px}
+.modal-x{width:36px;height:36px;border-radius:50%;border:none;background:#f1f5f9;font-size:17px;color:var(--mut);flex:none;display:flex;align-items:center;justify-content:center}
+.modal-x:hover{background:#e2e8f0;color:var(--ink)}
+.modal-body{padding:20px 24px 26px}
+.tabs{display:flex;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:5px;margin-bottom:18px;overflow-x:auto}
+.tabs button{flex:1;border:none;background:transparent;padding:9px 8px;border-radius:9px;font-weight:700;font-size:13px;color:var(--mut);white-space:nowrap}
+.tabs button.on{background:#fff;color:var(--teal-d);box-shadow:0 1px 6px rgba(15,23,42,.12)}
+.pane{display:none}
+.pane.on{display:block}
+.done-box{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:var(--rad);padding:22px;text-align:center}
+.done-box h3{color:#065f46;margin-bottom:8px}
+.done-box p{font-size:13.5px;color:#047857}
+.mini-lb{list-style:none}
+.mini-lb li{display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px dashed var(--line);font-size:14px}
+.mini-lb .rank{width:28px;height:28px;border-radius:50%;background:var(--warn-bg);color:var(--amber-d);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex:none}
+.mini-lb li:first-child .rank{background:var(--amber);color:#fff}
+.mini-lb b{margin-left:auto;color:var(--teal-d)}
+/* materi */
+.mat-item{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:var(--rad-s);padding:11px 13px;margin-bottom:9px;background:#fff}
+.mat-ico{width:38px;height:38px;border-radius:9px;background:var(--teal-bg);display:flex;align-items:center;justify-content:center;font-size:18px;flex:none}
+.mat-item .t{font-weight:700;font-size:13.5px}
+.mat-item .k{font-size:11px;color:var(--mut)}
+.mat-item .right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.lock-box{background:var(--warn-bg);border:1px solid #fde68a;border-radius:var(--rad);padding:16px;text-align:center}
+.open-box{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:var(--rad);padding:13px 16px;font-size:13.5px;color:#065f46;margin-bottom:14px;font-weight:600}
+/* sertifikat tab */
+.cert-claim{display:flex;gap:9px}
+.cert-claim .f-in{flex:1}
+#certResult{margin-top:16px}
+.cert-view{background:linear-gradient(160deg,#f0fdfa,#fffbeb);border:1px solid #99f6e4;border-radius:var(--rad);padding:14px;text-align:center}
+#certCanvas{width:100%;max-width:520px;height:auto;border-radius:8px;box-shadow:var(--shadow);background:#fff}
+.cert-actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:13px;align-items:center}
+.cert-actions .f-in{max-width:190px}
+.empty{background:var(--bg);border:1px dashed var(--line);border-radius:var(--rad);padding:22px;text-align:center;color:var(--mut);font-size:13.5px}
+/* ============ admin ============ */
+#adminOverlay{z-index:120}
+.admin-shell{background:#fff;border-radius:20px;width:100%;max-width:1080px;margin:auto;box-shadow:var(--shadow-l);overflow:hidden;animation:pop .22s ease}
+.admin-top{display:flex;align-items:center;gap:12px;padding:16px 22px;background:linear-gradient(120deg,#134e4a,var(--teal));color:#fff}
+.admin-top h2{font-size:17px;font-weight:800}
+.admin-top .sp{margin-left:auto;display:flex;gap:8px;align-items:center}
+.admin-top .btn-sm{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)}
+.admin-login{padding:40px 24px;max-width:420px;margin:0 auto;text-align:center}
+.admin-login h3{font-size:19px;margin-bottom:6px}
+.admin-login p{color:var(--mut);font-size:13px;margin-bottom:18px}
+.login-mode{display:flex;gap:6px;margin-bottom:18px;background:var(--bg);padding:5px;border-radius:11px}
+.login-mode button{flex:1;border:none;background:transparent;padding:8px;border-radius:8px;font-weight:700;font-size:13px;color:var(--mut)}
+.login-mode button.on{background:#fff;color:var(--teal-d);box-shadow:0 1px 5px rgba(15,23,42,.12)}
+.admin-body{display:grid;grid-template-columns:210px 1fr;min-height:520px}
+.admin-nav{background:var(--bg);border-right:1px solid var(--line);padding:14px 10px;display:flex;flex-direction:column;gap:4px}
+.admin-nav button{display:flex;align-items:center;gap:9px;border:none;background:transparent;text-align:left;padding:10px 12px;border-radius:10px;font-weight:700;font-size:13.5px;color:var(--ink2)}
+.admin-nav button.on{background:var(--teal);color:#fff}
+.admin-nav button:hover:not(.on){background:#eef2f7}
+.admin-main{padding:20px 22px;overflow:auto;max-height:70vh}
+.admin-main h3{font-size:17px;font-weight:800;margin-bottom:4px}
+.admin-main .sub{color:var(--mut);font-size:12.5px;margin-bottom:16px}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;font-size:10.5px;letter-spacing:1px;color:var(--mut2);padding:8px 10px;border-bottom:2px solid var(--line);white-space:nowrap}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tr:hover td{background:#fafcff}
+.badge{display:inline-block;font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;letter-spacing:.4px}
+.badge.ok{background:#d1fae5;color:#065f46}
+.badge.pend{background:#fef3c7;color:#92400e}
+.badge.off{background:#e2e8f0;color:#475569}
+.badge.err{background:#fee2e2;color:#b91c1c}
+.row-acts{display:flex;gap:5px;flex-wrap:wrap}
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.dash-card{background:linear-gradient(140deg,var(--teal-bg),#fff);border:1px solid #99f6e4;border-radius:var(--rad);padding:15px}
+.dash-card b{font-size:24px;color:var(--teal-d);display:block}
+.dash-card span{font-size:11.5px;color:var(--mut);font-weight:700}
+.form-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--rad);padding:16px;margin-bottom:16px}
+.form-card h4{font-size:14px;margin-bottom:4px}
+.hint{font-size:12px;color:var(--mut)}
+.cert-design-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.color-in{height:40px;padding:3px;cursor:pointer}
+.logo-prev{width:64px;height:64px;border-radius:12px;border:1px solid var(--line);object-fit:cover;background:var(--bg)}
+.logo-empty{width:64px;height:64px;border-radius:12px;border:1.5px dashed var(--line);display:flex;align-items:center;justify-content:center;color:var(--mut2);font-size:11px}
+/* toast */
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:12px;font-size:13.5px;font-weight:600;z-index:200;opacity:0;pointer-events:none;transition:.25s;box-shadow:var(--shadow-l);max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.err{background:var(--err)}
+#toast.ok{background:var(--ok)}
+#toast.warn{background:var(--amber-d)}
+/* responsive */
+@media(max-width:960px){
+  .hero .container{grid-template-columns:1fr}
+  .grid.sessions,.grid.mods,.grid.posts{grid-template-columns:1fr 1fr}
+  .grid.testis{grid-template-columns:1fr 1fr}
+  .svc-wrap,.don-wrap{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .admin-body{grid-template-columns:1fr}
+  .admin-nav{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--line)}
+  .admin-nav button{white-space:nowrap}
+  .dash-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  nav.mainnav{display:none;position:absolute;top:66px;left:0;right:0;background:#fff;flex-direction:column;padding:12px;border-bottom:1px solid var(--line);box-shadow:var(--shadow-l)}
+  nav.mainnav.open{display:flex}
+  .burger{display:block;margin-left:auto}
+  #syncBadge{display:none}
+  .hero h1{font-size:32px}
+  .grid.sessions,.grid.mods,.grid.posts,.grid.testis{grid-template-columns:1fr}
+  .f-row,.cert-design-grid{grid-template-columns:1fr}
+  .modal-overlay{padding:14px 8px}
+  .pick-list{grid-template-columns:1fr}
+  .section,.sec{padding:44px 0}
+}
+</style>
+</head>
+<body>
+<!-- ================= HEADER ================= -->
+<header id="siteHeader">
+  <div class="container topbar">
+    <div class="brand" id="brandBox"></div>
+    <span id="syncBadge">…</span>
+    <nav class="mainnav" id="mainNav">
+      <a href="#beranda">Beranda</a>
+      <a href="#pelatihan">Pelatihan</a>
+      <a href="#modul">Modul &amp; Harga</a>
+      <a href="#donasi">Donasi</a>
+      <a href="#testimoni">Testimoni</a>
+      <a href="#blog">Blog</a>
+      <button id="btnAdminTop" class="btn btn-sm" style="margin-left:6px">🔐 Admin</button>
+    </nav>
+    <button class="burger" id="btnBurger" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="beranda">
+  <div class="container">
+    <div>
+      <span class="hero-tag">🎓 PLATFORM PELATIHAN &amp; DONASI EDUKASI</span>
+      <h1>Naik Kelas Bersama.<br>Tumbuh Melalui <em>Donasi</em> &amp; Kolaborasi.</h1>
+      <p class="lead">Ikuti pelatihan berkualitas untuk pendidik, berdonasi sesuai kemampuan (sukarela), dan dapatkan sertifikat resmi. Butuh aplikasi? Kami wujudkan per modul.</p>
+      <div class="hero-cta">
+        <a href="#pelatihan" class="btn btn-amber">📚 Lihat Jadwal Pelatihan</a>
+        <a href="#donasi" class="btn btn-ghost">❤️ Berdonasi</a>
+        <a href="#jasa" class="btn btn-ghost">🛠️ Jasa Aplikasi</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>Kenapa EduNusa?</h3>
+      <ul>
+        <li><b> Gratis &amp; Donasi</b><span>sebagian pelatihan gratis — donasi 100% sukarela</span></li>
+        <li><b> Sertifikat</b><span>unduh otomatis setelah pelatihan selesai</span></li>
+        <li><b> Materi Eksklusif</b><span>rekaman video &amp; audio untuk donatur</span></li>
+        <li><b> Aplikasi Moduler</b><span>bangun sistem sekolah per modul, hemat biaya</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="stats">
+    <div class="stat"><b id="stSess">8</b><span>Sesi Pelatihan</span></div>
+    <div class="stat"><b id="stRegs">0</b><span>Total Pendaftar</span></div>
+    <div class="stat"><b id="stDon">Rp 0</b><span>Donasi Terkumpul</span></div>
+    <div class="stat"><b id="stCert">0</b><span>Sertifikat Terbit</span></div>
+  </div>
+</div>
+
+<!-- ================= PELATIHAN ================= -->
+<section class="sec" id="pelatihan">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-kicker">JADWAL TERBARU</span>
+      <h2>Pelatihan untuk Pendidik</h2>
+      <p>Klik kartu untuk detail, pendaftaran, donasi, materi, dan unduhan sertifikat.</p>
+    </div>
+    <div class="chips" id="sessChips"></div>
+    <div class="grid sessions" id="sessGrid"></div>
+  </div>
+</section>
+
+<!-- ================= MODUL & HARGA ================= -->
+<section class="sec alt" id="modul">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-kicker">JASA PENGEMBANGAN</span>
+      <h2>Modul Aplikasi &amp; Harga</h2>
+      <p>Bangun sistem digital sekolah/lembaga Anda secara modul — bayar hanya yang dibutuhkan.</p>
+    </div>
+    <div class="grid mods" id="modGrid"></div>
+    <div class="disc-note">
+      <div style="font-size:30px">🎁</div>
+      <div>
+        <b>Diskon bundel &amp; gratis biaya implementasi</b>
+        <ul>
+          <li>💡 Ambil <b>3+ modul</b> → diskon <b>10%</b> · <b>5+ modul</b> → <b>15%</b> · <b>7+ modul</b> → <b>20%</b></li>
+          <li>🚀 Biaya implementasi <b>Rp 1.500.000</b> — <b>GRATIS</b> untuk paket 4+ modul</li>
+          <li>🧩 Includes: instalasi, training pengguna, dan 3 bulan perbaikan bug</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= JASA / REQUEST ================= -->
+<section class="sec" id="jasa">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-kicker">KONSULTASI GRATIS</span>
+      <h2>Rancang Aplikasi Anda</h2>
+      <p>Pilih modul yang diinginkan — sistem menghitung estimasi biaya otomatis, lalu kirim permintaan.</p>
+    </div>
+    <div class="svc-wrap">
+      <div class="svc-pick">
+        <h3>1️⃣ Pilih Modul</h3>
+        <div class="pick-list" id="reqPick"></div>
+        <div class="req-sum" id="reqSummary"></div>
+      </div>
+      <div class="svc-form">
+        <h3>2️⃣ Data Pengaju</h3>
+        <label class="f-lab">Nama Lengkap *</label>
+        <input class="f-in" id="reqName" placeholder="cth. Ahmad Fauzi">
+        <div class="f-row">
+          <div><label class="f-lab">Email *</label><input class="f-in" id="reqEmail" type="email" placeholder="nama@email.com"></div>
+          <div><label class="f-lab">No. WhatsApp *</label><input class="f-in" id="reqPhone" placeholder="08xxxxxxxxxx"></div>
+        </div>
+        <label class="f-lab">Sekolah / Lembaga / Organisasi</label>
+        <input class="f-in" id="reqOrg" placeholder="cth. SMP Negeri 1 Nusantara">
+        <label class="f-lab">Catatan Kebutuhan</label>
+        <textarea class="f-in" id="reqMsg" placeholder="Ceritakan kebutuhan Anda: fitur tambahan, jumlah pengguna, target waktu…"></textarea>
+        <button class="btn btn-teal" id="btnReq" style="width:100%;margin-top:16px">📨 Kirim Permintaan Konsultasi</button>
+        <p class="hint" style="margin-top:9px">Tim kami akan menghubungi Anda via WhatsApp dalam 1×24 jam kerja.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= DONASI ================= -->
+<section class="sec alt" id="donasi">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-kicker">100% SUKARELA</span>
+      <h2>Donasi untuk Pendidikan</h2>
+      <p>Setiap donasi membantu operasional pelatihan &amp; beasiswa peserta. Donatur teratas tampil di papan penghargaan setiap sesi.</p>
+    </div>
+    <div class="don-wrap">
+      <div class="don-box">
+        <h3 style="font-size:16px;font-weight:800;margin-bottom:12px">💖 Formulir Donasi</h3>
+        <label class="f-lab">Pilih nominal</label>
+        <div class="presets" id="donPresets"></div>
+        <label class="f-lab">atau masukkan nominal lain (Rp)</label>
+        <input class="f-in" id="donCustom" type="number" min="1000" step="1000" placeholder="cth. 75000">
+        <label class="f-lab">Untuk sesi pelatihan</label>
+        <select class="f-in" id="donSession"></select>
+        <div class="f-row">
+          <div><label class="f-lab">Nama Donatur *</label><input class="f-in" id="donName" placeholder="Nama Anda"></div>
+          <div><label class="f-lab">Email *</label><input class="f-in" id="donEmail" type="email" placeholder="nama@email.com"></div>
+        </div>
+        <label class="f-lab">Metode</label>
+        <select class="f-in" id="donMethod">
+          <option value="Transfer Bank">🏦 Transfer Bank</option>
+          <option value="QRIS">📱 QRIS</option>
+        </select>
+        <label class="f-lab">Pesan / doa (opsional)</label>
+        <input class="f-in" id="donMsg" placeholder="Semangat untuk pendidikan Indonesia!">
+        <button class="btn btn-teal" id="btnDon" style="width:100%;margin-top:16px">❤️ Kirim Donasi (PENDING → Konfirmasi Admin)</button>
+        <div class="bank-box" id="donBankBox"></div>
+        <p class="hint" style="margin-top:8px">Setelah transfer, donasi berstatus <b>PENDING</b>. Admin akan memverifikasi lalu status menjadi <b>CONFIRMED</b>.</p>
+      </div>
+      <div class="don-box">
+        <h3 style="font-size:16px;font-weight:800;margin-bottom:4px">📈 Pertumbuhan Donasi</h3>
+        <p class="hint" style="margin-bottom:10px">Akumulasi donasi terkonfirmasi per bulan (sinkron realtime).</p>
+        <div class="chart-box"><canvas id="donChart" width="560" height="300"></canvas></div>
+        <h4 style="font-size:13.5px;margin:18px 0 6px;color:var(--ink2)">🏆 Donatur Teratas (semua sesi)</h4>
+        <ul class="mini-lb" id="lbAll"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONI ================= -->
+<section class="sec" id="testimoni">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-kicker">KATA MEREKA</span>
+      <h2>Testimoni Peserta</h2>
+      <p>Bagikan pengalaman Anda mengikuti pelatihan EduNusa.</p>
+    </div>
+    <div class="grid testis" id="testiGrid"></div>
+    <div style="text-align:center;margin-top:24px">
+      <button class="btn btn-line" id="btnAddTesti">✍️ Tulis Testimoni</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BLOG ================= -->
+<section class="sec alt" id="blog">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-kicker">WAWASAN</span>
+      <h2>Blog EduNusa</h2>
+      <p>Artikel, tips, dan cerita dari lapangan.</p>
+    </div>
+    <div class="grid posts" id="blogGrid"></div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="sec" id="faq">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-kicker">BANTUAN</span>
+      <h2>Pertanyaan Umum</h2>
+    </div>
+    <div class="faq" id="faqBox"></div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand" id="footBrand"></div>
+        <p>Platform pelatihan pendidik berbasis donasi + jasa pengembangan aplikasi pendidikan per modul. Dibuat dengan ❤️ untuk Indonesia.</p>
+      </div>
+      <div>
+        <h4>Menu</h4>
+        <a href="#pelatihan">Pelatihan</a>
+        <a href="#modul">Modul &amp; Harga</a>
+        <a href="#donasi">Donasi</a>
+        <a href="#testimoni">Testimoni</a>
+        <a href="#blog">Blog</a>
+      </div>
+      <div>
+        <h4>Kontak</h4>
+        <div id="footKontak"></div>
+      </div>
+      <div>
+        <h4>Donasi</h4>
+        <div id="footBank"></div>
+      </div>
+    </div>
+    <div class="foot-bot">© 2026 EduNusa · Sertifikat dapat diverifikasi dengan kode unik di situs ini · v2.0</div>
+  </div>
+</footer>
+
+<a class="wa-float" id="waFloat" target="_blank" rel="noopener" aria-label="Chat WhatsApp" title="Chat WhatsApp">
+  <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.3 4 14.9c0 2.6.8 5 2.3 7L4 29l7.3-2.3c1.9 1 4 1.6 6.2 1.6h.5c6.6 0 12-5.3 12-11.9C30 8.3 22.6 3 16 3zm0 21.8c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.3 1.4 1.4-4.2-.3-.4c-1.2-1.7-1.8-3.7-1.8-5.8C5.2 9.4 10 5.9 16 5.9S26.8 9.4 26.8 15 22 24.8 16 24.8zm5.5-7.4c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-.9 1.2-.3.2-.6.1c-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1s0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5s0-.4 0-.5c-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/></svg>
+</a>
+<!-- ================= SESSION MODAL ================= -->
+<div class="modal-overlay" id="sessionModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h2 id="smTitle">Detail Pelatihan</h2>
+        <div class="sess-tags" id="smTags" style="margin-top:6px"></div>
+      </div>
+      <button class="modal-x" id="smClose" aria-label="Tutup">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="tabs" id="smTabs">
+        <button data-tab="daftar" class="on">📝 Daftar</button>
+        <button data-tab="donasi">❤️ Donasi</button>
+        <button data-tab="rank">🏆 Donatur Terbaik</button>
+        <button data-tab="materi">🎬 Materi</button>
+        <button data-tab="sertifikat">🎓 Sertifikat</button>
+      </div>
+
+      <div class="pane on" id="paneDaftar">
+        <div class="meta2" style="margin-bottom:14px" id="smMeta"></div>
+        <div class="mat-preview" id="smMats" style="margin-bottom:16px"></div>
+        <form id="regForm">
+          <div class="f-row">
+            <div><label class="f-lab">Nama Lengkap *</label><input class="f-in" id="regName" required placeholder="Nama Anda"></div>
+            <div><label class="f-lab">Email *</label><input class="f-in" id="regEmail" type="email" required placeholder="nama@email.com"></div>
+          </div>
+          <div class="f-row">
+            <div><label class="f-lab">No. WhatsApp *</label><input class="f-in" id="regPhone" required placeholder="08xxxxxxxxxx"></div>
+            <div><label class="f-lab">Pekerjaan / Instansi</label><input class="f-in" id="regJob" placeholder="cth. Guru SD / Mahasiswa"></div>
+          </div>
+          <label class="f-lab">Catatan (opsional)</label>
+          <input class="f-in" id="regNote" placeholder="Harapan Anda mengikuti pelatihan ini">
+          <button type="submit" class="btn btn-teal" style="width:100%;margin-top:16px" id="regSubmit">✅ Daftar Sekarang</button>
+        </form>
+        <div class="done-box" id="regDone" style="display:none"></div>
+      </div>
+
+      <div class="pane" id="paneDonasi">
+        <p style="font-size:14px;color:var(--ink2);margin-bottom:10px">Dukung sesi <b id="donSessName">ini</b> dengan donasi sukarela. Donasi terkonfirmasi membuka <b>materi eksklusif</b> (rekaman video/audio) dan memasukkan Anda ke papan <b>Donatur Terbaik</b>.</p>
+        <button class="btn btn-amber" id="btnGoDon" style="width:100%">❤️ Buka Formulir Donasi di Bawah</button>
+        <div class="lock-box" style="margin-top:14px;text-align:left">
+          <b>💡 Cara kerja:</b>
+          <ol style="font-size:13px;color:var(--ink2);margin:8px 0 0 18px">
+            <li>Isi donasi (nominal bebas, mulai Rp 10.000)</li>
+            <li>Transfer sesuai instruksi (status <i>PENDING</i>)</li>
+            <li>Admin konfirmasi → status <b>CONFIRMED</b> → materi terbuka otomatis via email Anda</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="pane" id="paneRank">
+        <p class="hint" style="margin-bottom:10px">Papan penghargaan donatur sesi ini (donasi terkonfirmasi).</p>
+        <ul class="mini-lb" id="lbSession"></ul>
+      </div>
+
+      <div class="pane" id="paneMateri">
+        <div id="matBox"></div>
+      </div>
+
+      <div class="pane" id="paneSertifikat">
+        <div class="open-box" id="certHint">🎓 Selesaikan pelatihan ini lalu unduh sertifikat Anda dengan memasukkan email yang sama saat mendaftar.</div>
+        <div class="cert-claim">
+          <input class="f-in" id="certEmail" type="email" placeholder="Email yang Anda gunakan saat mendaftar">
+          <button class="btn btn-teal" id="btnCertClaim">🔍 Cek</button>
+        </div>
+        <div id="certResult"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= TESTI MODAL ================= -->
+<div class="modal-overlay" id="testiModal">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-head">
+      <h2>✍️ Tulis Testimoni</h2>
+      <button class="modal-x" onclick="closeModal('testiModal')" aria-label="Tutup">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="f-row">
+        <div><label class="f-lab">Nama *</label><input class="f-in" id="tName" placeholder="Nama Anda"></div>
+        <div><label class="f-lab">Rating</label><select class="f-in" id="tRating"><option value="5">★★★★★ (5)</option><option value="4">★★★★ (4)</option><option value="3">★★★ (3)</option></select></div>
+      </div>
+      <div class="f-row">
+        <div><label class="f-lab">Peran</label><input class="f-in" id="tRole" placeholder="cth. Guru SMP"></div>
+        <div><label class="f-lab">Sekolah / Instansi</label><input class="f-in" id="tOrg" placeholder="cth. SMPN 2 Harapan"></div>
+      </div>
+      <label class="f-lab">Testimoni *</label>
+      <textarea class="f-in" id="tContent" placeholder="Bagikan pengalaman Anda…"></textarea>
+      <button class="btn btn-teal" id="btnTesti" style="width:100%;margin-top:14px">Kirim Testimoni</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= BLOG MODAL ================= -->
+<div class="modal-overlay" id="blogModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <span class="post-cat" id="bmCat"></span>
+        <h2 id="bmTitle" style="margin-top:4px"></h2>
+        <div class="post-meta" id="bmMeta" style="margin-top:6px"></div>
+      </div>
+      <button class="modal-x" onclick="closeModal('blogModal')" aria-label="Tutup">✕</button>
+    </div>
+    <div class="modal-body" id="bmBody" style="font-size:14.5px;color:var(--ink2);max-height:60vh;overflow:auto"></div>
+  </div>
+</div>
+
+<!-- ================= ADMIN OVERLAY ================= -->
+<div class="modal-overlay" id="adminOverlay">
+  <div class="admin-shell">
+    <div class="admin-top">
+      <h2>⚙️ Panel Admin EduNusa</h2>
+      <div class="sp">
+        <span id="admModeBadge" class="badge" style="background:rgba(255,255,255,.2);color:#fff">demo</span>
+        <button class="btn btn-sm" id="btnAdmLogout" style="display:none">Keluar</button>
+        <button class="btn btn-sm" id="btnAdmClose">✕ Tutup</button>
+      </div>
+    </div>
+
+    <!-- login view -->
+    <div class="admin-login" id="adminLogin">
+      <h3>🔐 Masuk Admin</h3>
+      <p id="alHint">Mode Cloud: gunakan email &amp; password akun Supabase Anda.<br>Mode Demo: gunakan PIN.</p>
+      <div class="login-mode">
+        <button id="lmPin" class="on">💾 Demo (PIN)</button>
+        <button id="lmCloud">☁️ Cloud (Email)</button>
+      </div>
+      <div id="alPinWrap">
+        <label class="f-lab" style="text-align:left">PIN Admin</label>
+        <input class="f-in" id="alPinIn" type="password" placeholder="PIN (default: admin123)" style="text-align:center;font-size:18px;letter-spacing:4px">
+      </div>
+      <div id="alCloudWrap" style="display:none">
+        <label class="f-lab" style="text-align:left">Email Admin (akun Supabase)</label>
+        <input class="f-in" id="alEmail" type="email" placeholder="admin@domain.com">
+        <label class="f-lab" style="text-align:left">Password</label>
+        <input class="f-in" id="alPass" type="password" placeholder="••••••••">
+      </div>
+      <button class="btn btn-teal" id="btnLogin" style="width:100%;margin-top:16px">Masuk</button>
+      <p class="hint" style="margin-top:12px" id="alFoot">Buat akun admin di Dashboard Supabase → Authentication → Users.</p>
+    </div>
+
+    <!-- panel view -->
+    <div class="admin-body" id="adminPanel" style="display:none">
+      <div class="admin-nav" id="admNav">
+        <button data-atab="dash" class="on">📊 Dasbor</button>
+        <button data-atab="sesi">📚 Sesi Pelatihan</button>
+        <button data-atab="modul">🧩 Modul &amp; Harga</button>
+        <button data-atab="materi">🎬 Materi</button>
+        <button data-atab="don">❤️ Donasi</button>
+        <button data-atab="testi">💬 Testimoni</button>
+        <button data-atab="cert">🎓 Sertifikat</button>
+        <button data-atab="set">⚙️ Pengaturan</button>
+      </div>
+      <div class="admin-main" id="admMain"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ================================================================
+   EduNusa v2.0 — single-file app
+   Modes: 💾 Demo (localStorage) | ☁️ Cloud (Supabase + realtime)
+   Certificate system + custom design + WhatsApp delivery + site logo
+   ================================================================ */
+'use strict';
+
+/* ---------------- CONFIG ---------------- */
+const CONFIG = {
+  SB_URL: 'https://fawlhkstokjuxcbppkgc.supabase.co',   // project URL Anda
+  SB_KEY: '',                                            // tempel ANON KEY via Admin → Pengaturan (atau isi langsung di sini)
+  PREFIX: 'edunusa_',
+  ADMIN_PIN: 'admin123'
+};
+const PREFIX = CONFIG.PREFIX;
+
+/* ---------------- DEFAULT SITE & CERT CONFIG ---------------- */
+const DEFAULT_CFG = {
+  wa_number: '6281234567890',
+  contact_email: 'halo@edunusa.id',
+  bank_info: 'BRI  1234-5678-9012  a.n. EduNusa Nusantara\nQRIS: tersedia — minta kode via WhatsApp',
+  site_logo: '',
+  cert_title: 'SERTIFIKAT PENYELESAIAN PELATIHAN',
+  cert_subtitle: 'Diberikan dengan bangga kepada',
+  cert_org: 'EduNusa · Pusat Pelatihan Guru & Pengembangan Aplikasi Pendidikan',
+  cert_color1: '#0f766e',
+  cert_color2: '#f59e0b',
+  cert_signer_name: 'Dr. Ratna Wijayanti, M.Pd.',
+  cert_signer_role: 'Direktur Program EduNusa',
+  cert_footer: 'Sertifikat ini sah dan dapat diverifikasi dengan memasukkan kode unik pada menu Sertifikat di situs EduNusa.',
+  cert_place: 'Jakarta',
+  cert_logo: ''
+};
+
+/* ---------------- utils ---------------- */
+const qs = s => document.querySelector(s);
+const qsa = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => 'x' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const CODE_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+const randCode = n => Array.from({length: n}, () => CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)]).join('');
+const fmtRp = n => 'Rp ' + Number(n || 0).toLocaleString('id-ID');
+const validEmail = e => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(e || '').trim());
+const normEmail = e => String(e || '').trim().toLowerCase();
+const fmtDateID = iso => { try { return new Date(iso).toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'}); } catch(e) { return String(iso || '').slice(0, 10); } };
+const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+let toastT = null;
+function toast(msg, kind) {
+  const t = qs('#toast');
+  t.textContent = msg;
+  t.className = 'show' + (kind ? ' ' + kind : '');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), kind === 'err' ? 5200 : 3200);
+}
+function waLink(phone, msg) {
+  const digits = String(phone || '').replace(/[^0-9]/g, '').replace(/^0/, '62');
+  return 'https://wa.me/' + digits + '?text=' + encodeURIComponent(msg);
+}
+function openModal(id) {
+  const el = qs('#' + id);
+  if (el) { el.classList.add('open'); document.body.style.overflow = 'hidden'; }
+}
+/* closeModal — defensif: hanya menerima string id (fix Task 11).
+   Jika dipanggil oleh addEventListener tanpa wrapper, argumennya adalah
+   MouseEvent (bukan string) → diperlakukan sebagai pemanggilan tanpa id. */
+function closeModal(id) {
+  const el = (typeof id === 'string' && id) ? qs('#' + id) : qsa('.modal-overlay.open').find(m => m.id !== 'adminOverlay');
+  if (el) el.classList.remove('open');
+  if (!document.querySelector('.modal-overlay.open')) document.body.style.overflow = '';
+}
+
+/* ---------------- SEED DATA ---------------- */
+const SESSIONS_SEED = [
+  {id:'s1', title:'Kurikulum Merdeka: Pembelajaran Berdiferensiasi', cat:'📚 Kurikulum & Pembelajaran', lev:'Dasar',
+   fac:'Dr. Ratna Wijayanti, M.Pd.', facT:'Konsultan Kurikulum Nasional · 15 th pengalaman',
+   sched:'Selasa, 3 November 2026', time:'09.00 WIB', dur:'3 hari', jp:12, mode:'Online Live via Zoom',
+   price:'GRATIS', priceNote:'per peserta — donasi sukarela', quota:100, taken:4, status:'aktif', sort:1, freeAccess:true,
+   mats:['Filosofi & struktur Kurikulum Merdeka','Menyusun modul ajar berdiferensiasi','Asesmen formatif dalam pembelajaran','Studi kasus & praktik langsung'],
+   desc:'Pahami cara merancang pembelajaran yang mengakomodasi keberagaman murid: dari diagnosis kebutuhan, diferensiasi konten-proses-produk, hingga evaluasi.',
+   media:[{id:'md1',type:'video',title:'Video: Filosofi Kurikulum Merdeka (14:32)',url:'https://www.w3schools.com/html/mov_bbb.mp4',locked:false},
+          {id:'md2',type:'audio',title:'Audio: Rekaman Sesi Live — Berdiferensiasi (32:10)',url:'https://www.w3schools.com/html/horse.mp3',locked:false}]},
+  {id:'s2', title:'Literasi & Numerasi Dasar yang Menyenangkan', cat:'📖 Literasi & Numerasi', lev:'Dasar',
+   fac:'Drs. Hendra Gunawan, M.Pd.', facT:'Author Kurikulum Literasi · Praktisi 20 th',
+   sched:'Kamis, 12 November 2026', time:'09.00 WIB', dur:'2 hari', jp:8, mode:'Online Live via Zoom',
+   price:'Rp 120.000', priceNote:'per peserta', quota:80, taken:11, status:'aktif', sort:2, freeAccess:false,
+   mats:['Diagnosis kemampuan awal murid','Game & aktivitas literasi-numerasi','Asesmen harian yang ringan','Rencana remedi kreatif'],
+   desc:'Strategi praktis menanamkan fondasi literasi-numerasi dengan aktivitas low-cost yang bisa langsung dipakai di kelas besok pagi.',
+   media:[{id:'md3',type:'audio',title:'Audio: Rekaman Sesi 1 — Diagnosis Awal (28:45)',url:'https://www.w3schools.com/html/horse.mp3',locked:true}]},
+  {id:'s3', title:'Projek Penguatan Profil Pelajar Pancasila (P5)', cat:'🌱 P5 & Karakter', lev:'Menengah',
+   fac:'Dr. Ratna Wijayanti, M.Pd.', facT:'Konsultan Kurikulum Nasional · 15 th pengalaman',
+   sched:'Senin, 23 November 2026', time:'13.00 WIB', dur:'3 hari', jp:12, mode:'Online Live via Zoom',
+   price:'Rp 150.000', priceNote:'per peserta', quota:60, taken:23, status:'selesai', sort:3, freeAccess:false,
+   mats:['Kerangka P5 & dimensi profil lulusan','Merancang tema & projek sesuai konteks sekolah','Asesmen projek (rubrik & portofolio)','Showcase & refleksi'],
+   desc:'Dari gagasan ke aksi: rancangan projek P5 yang nyata, terukur, dan berkesan bagi murid — lengkap dengan contoh nyata dari lapangan.',
+   media:[{id:'md4',type:'video',title:'Video: Contoh Projek P5 (18:20)',url:'https://www.w3schools.com/html/mov_bbb.mp4',locked:true},
+          {id:'md5',type:'audio',title:'Audio: Q&A Pendampingan P5 (25:00)',url:'https://www.w3schools.com/html/horse.mp3',locked:true}]},
+  {id:'s4', title:'Asesmen Autentik & Penilaian Berbasis Digital', cat:'📊 Asesmen', lev:'Menengah',
+   fac:'Prof. Dr. Sari Kusuma, M.Pd.', facT:'Guru Besar Evaluasi Pendidikan',
+   sched:'Rabu, 2 Desember 2026', time:'09.00 WIB', dur:'2 hari', jp:8, mode:'Online Live via Zoom',
+   price:'Rp 150.000', priceNote:'per peserta', quota:70, taken:8, status:'aktif', sort:4, freeAccess:false,
+   mats:['Prinsip asesmen autentik','Rubrik & portofolio digital','Kuis interaktif (Quizizz, Wordwall)','Analisis hasil untuk pembelajaran'],
+   desc:'Beralih dari sekadar angka ke bukti belajar: bangun sistem penilaian autentik berbantuan digital yang efisien.',
+   media:[]},
+  {id:'s5', title:'Media Pembelajaran Digital & Canva untuk Guru', cat:'💻 Teknologi Pendidikan', lev:'Dasar',
+   fac:'Rizky Pratama, S.Kom.', facT:'Product Designer & Trainer TIK',
+   sched:'Selasa, 15 Desember 2026', time:'09.00 WIB', dur:'1 hari', jp:4, mode:'Online Live via Zoom',
+   price:'GRATIS', priceNote:'per peserta — donasi sukarela', quota:150, taken:57, status:'aktif', sort:5, freeAccess:false,
+   mats:['Prinsip desain media belajar','Canva: dari blanko ke bahan ajar','Video & infografis cepat','Berbagi template'],
+   desc:'Kelas praktis: di akhir sesi Anda pulang membawa 3 media pembelajaran siap pakai buatan sendiri.',
+   media:[]},
+  {id:'s6', title:'AI Generatif untuk Guru: Prompt, Quiz & RPP', cat:'🤖 AI untuk Guru', lev:'Menengah',
+   fac:'Rizky Pratama, S.Kom.', facT:'Product Designer & Trainer TIK',
+   sched:'Selasa, 13 Januari 2027', time:'13.00 WIB', dur:'2 hari', jp:8, mode:'Online Live via Zoom',
+   price:'Rp 200.000', priceNote:'per peserta', quota:60, taken:19, status:'selesai', sort:6, freeAccess:false,
+   mats:['Cara kerja AI generatif (tanpa jargon)','Prompt engineering untuk bahan ajar','Membuat bank soal otomatis','Etika & batas penggunaan AI di sekolah'],
+   desc:'Manfaatkan AI sebagai asisten: menyusun RPP awal, memvariasikan soal, dan menyesuaikan materi secara personal.',
+   media:[{id:'md6',type:'video',title:'Video: Demo Prompt untuk RPP (21:05)',url:'https://www.w3schools.com/html/mov_bbb.mp4',locked:true}]},
+  {id:'s7', title:'Manajemen Kelas & Kesejahteraan Siswa', cat:'🧠 Manajemen Kelas', lev:'Dasar',
+   fac:'Dra. Wulan Sari, M.Si.', facT:'Psikolog Pendidikan & Trainer',
+   sched:'Kamis, 22 Januari 2027', time:'09.00 WIB', dur:'2 hari', jp:8, mode:'Online Live via Zoom',
+   price:'Rp 100.000', priceNote:'per peserta', quota:80, taken:5, status:'aktif', sort:7, freeAccess:false,
+   mats:['Memetakan dinamika kelas','Kesepakatan kelas yang ditaati','Menangani perilaku menantang','Ruang aman secara psikologis'],
+   desc:'Kelas yang tenang bukan keberuntungan — melainkan sistem. Pelajari rutinitas dan bahasa yang membangun kedisiplinan positif.',
+   media:[]},
+  {id:'s8', title:'Pembelajaran Sosial-Emosional (PSE) di Sekolah', cat:'💚 Kesejahteraan Siswa', lev:'Dasar',
+   fac:'Dra. Wulan Sari, M.Si.', facT:'Psikolog Pendidikan & Trainer',
+   sched:'Rabu, 10 Februari 2027', time:'09.00 WIB', dur:'1 hari', jp:4, mode:'Online Live via Zoom',
+   price:'GRATIS', priceNote:'per peserta — donasi sukarela', quota:150, taken:31, status:'aktif', sort:8, freeAccess:false,
+   mats:['Lima kompetensi PSE (CASEL)','Ritual singkat sebelum belajar','Kegiatan check-in emosi','Kolaborasi dengan orang tua'],
+   desc:'Siswa yang merasa aman belajar lebih baik. Integrasikan PSE dalam 10 menit pertama setiap hari.',
+   media:[]}
+];
+const MODULES_SEED = [
+  {id:'m1', title:'PPDB Online', price:2500000, sort:1, desc:'Pendaftaran siswa baru: form online, seleksi, pengumuman, dan cetak surat.'},
+  {id:'m2', title:'Absensi Siswa Digital', price:1200000, sort:2, desc:'Check-in QR, rekap harian otomatis, notifikasi orang tua.'},
+  {id:'m3', title:'Penilaian & Rapor Digital', price:1800000, sort:3, desc:'Input nilai, rapor otomatis, cetak PDF, analisis capaian.'},
+  {id:'m4', title:'Perpustakaan Digital', price:1500000, sort:4, desc:'Katalog, peminjaman-pengembalian, denda terlambat, laporan.'},
+  {id:'m5', title:'SPP & Keuangan Sekolah', price:1800000, sort:5, desc:'Tagihan, pembayaran, tunggakan, dan laporan keuangan bulanan.'},
+  {id:'m6', title:'Website Profil Sekolah', price:2000000, sort:6, desc:'CMS berita & pengumuman, galeri, profil guru, kontak.'},
+  {id:'m7', title:'Bank Soal & CBT', price:2200000, sort:7, desc:'Ujian berbasis komputer, auto-nilai, analisis butir soal.'},
+  {id:'m8', title:'E-Learning Ringan', price:2400000, sort:8, desc:'Kelas online, materi, tugas, diskusi — tanpa server berat.'},
+  {id:'m9', title:'Arsip & Disposisi Surat', price:900000, sort:9, desc:'Pencatatan surat masuk/keluar, disposisi berjenjang, arsip digital.'},
+  {id:'m10', title:'Jadwal & Absensi Guru', price:1100000, sort:10, desc:'Jadwal mengajar, absen harian, rekap mengajar per bulan.'},
+  {id:'m11', title:'Katalog UMKM Sekolah', price:1300000, sort:11, desc:'Etalase produk siswa, pencatatan penjualan, laporan praktik wirausaha.'},
+  {id:'m12', title:'Aplikasi Kustom', price:3000000, sort:12, desc:'Dibangun sesuai kebutuhan unik lembaga Anda — konsultasi dulu, GRATIS.'}
+];
+const TESTIS_SEED = [
+  {id:'t1', name:'Maya Sari', role:'Guru Kelas 4 SD', org:'SDN 01 Harapan Bangsa', rating:5, approved:true,
+   content:'Pelatihan Kurikulum Merdeka-nya luar biasa.langsung praktik, langsung paham. Modul ajarna jadi rapi sekarang.'},
+  {id:'t2', name:'Ahmad Fauzi', role:'Guru Matematika', org:'SMPN 2 Nusantara', rating:5, approved:true,
+   content:'Awalnya ragu karena gratis, ternyata materinya lebih dalam dari pelatihan bayar yang pernah saya ikuti. Donasi seikhlasnya saja.'},
+  {id:'t3', name:'Rina Marlina', role:'Kepala Sekolah', org:'SDIT Cendekia', rating:5, approved:true,
+   content:'Sekolah kami akhirnya punya aplikasi absensi & rapor. Harga per modul jauh lebih terjangkau dibangun dari nol.'},
+  {id:'t4', name:'Budi Santoso', role:'Guru BK', org:'SMAN 3 Harapan', rating:4, approved:true,
+   content:'Materi PSE-nya menyentuh. Ritual check-in emosi sekarang jadi favorit murid-murid saya.'},
+  {id:'t5', name:'Siti Aminah', role:'Guru Bahasa Indonesia', org:'SMPN 1 Ceria', rating:5, approved:true,
+   content:'Sertifikatnya cepat terbit setelah pelatihan selesai, tinggal masukkan email. Ada kodenya juga untuk verifikasi. Profesional!'},
+  {id:'t6', name:'Agus Wijaya', role:'Wali Murid', org:'—', rating:5, approved:true,
+   content:'Saya berdonasi karena anak saya diceritakan gurunya ikut pelatihan di sini. Pembelajarannya berubah jadi jauh lebih hidup.'},
+  {id:'t7', name:'Dewi Lestari', role:'Guru PAUD', org:'KB Tunas Bangsa', rating:4, approved:true,
+   content:'Canva-nya sangat membantu guru-guru PAUD yang awam desain. Rekaman sesinya bisa ditonton ulang karena saya donasi.'},
+  {id:'t8', name:'Hendra Pratama', role:'Operator Sekolah', org:'SMKN 4 Makmur', rating:5, approved:true,
+   content:'Modul PPDB-nya rapi, dikustom sesuai alur PPDB kami. Support-nya responsif via WhatsApp.'}
+];
+const POSTS_SEED = [
+  {id:'p1', slug:'panduan-kurikulum-merdeka-2026', cat:'KURIKULUM', author:'Dr. Ratna Wijayanti, M.Pd.', date:'2026-09-02', views:341,
+   title:'Panduan Lengkap Kurikulum Merdeka untuk Guru Kelas 2026',
+   excerpt:'Struktur, prinsip, dan langkah konkret menyusun modul ajar — plus templat siap pakai.',
+   content:'Kurikulum Merdeka memberi keleluasaan lebih besar bagi guru untuk merancang pembelajaran sesuai kebutuhan murid. Namun keleluasaan itu sering membingungkan: dari mana mulai, apa yang wajib, dan apa yang bisa disesuaikan.\n\nTiga hal yang perlu dipahami lebih dulu: (1) Capaian Pembelajaran (CP) adalah titik akhir, bukan daftar materi mingguan; (2) modul ajar adalah alat bantu, bukan dokumen birokrasi; (3) asesmen mengikuti tujuan pembelajaran — bukan sebaliknya.\n\nPraktiknya, mulailah dari satu mata pelajaran yang paling Anda kuasai. Bedah CP menjadi tujuan pembelajaran per fase, pilih 2–3 tujuan untuk satu trimester, lalu rancang aktivitas yang membuat murid melakukan sesuatu — diskusi, proyek, praktik — bukan sekadar mendengarkan.\n\nDi EduNusa, sesi pelatihan Kurikulum Merdeka membahas semua langkah di atas dengan studi kasus nyata dan pendampingan penyusunan modul ajar. Cek jadwal di bagian Pelatihan.'},
+  {id:'p2', slug:'ai-untuk-guru-2026', cat:'TEKNOLOGI', author:'Rizky Pratama, S.Kom.', date:'2026-09-18', views:512,
+   title:'7 Aplikasi AI yang Menghemat Waktu Guru Setiap Minggu',
+   excerpt:'Dari menyusun soal hingga memberi umpan balik — rutinitas yang bisa didelegasikan ke AI.',
+   excerpt2:null,
+   content:'Guru di Indonesia bekerja rata-rata 45+ jam per minggu, dan sebagian besar waktu habis untuk pekerjaan administratif. AI generatif tidak menggantikan guru — tetapi bisa mengambil alih sebagian rutinitas.\n\nTujuh delegasi yang paling terasa dampaknya: menyusun draf RPP, membuat variasi soal dari satu stimulus, menyederhanakan teks untuk bahan bacaan berjenjang, membuat rubrik penilaian, merangkum hasil refleksi murid, menulis draf komunikasi ke orang tua, dan menerjemahkan materi.\n\nKuncinya ada pada prompt: sebutkan peran, konteks kelas, format keluaran, dan contoh. Prompt yang baik menghemat puluhan menit revisi. Di sesi pelatihan AI untuk Guru, kami berlatih semua pola prompt tersebut secara langsung.'},
+  {id:'p3', slug:'studi-kasus-p5-sdn04', cat:'STUDI KASUS', author:'Dra. Wulan Sari, M.Si.', date:'2026-08-21', views:198,
+   title:'Studi Kasus: P5 di SDN 04 — dari Ide ke Aksi Siswa',
+   excerpt:'Bagaimana satu tema "Sampah Menjadi Rupiah" melahirkan projek lintas kelas selama 6 minggu.',
+   content:'Tema sampah memang bukan tema baru. Yang membuat projek di SDN 04 ini berbeda adalah strukturnya: murid tidak sekadar mengamati, tetapi memegang keputusan.\n\nMinggu 1–2: observasi dan pemetaan masalah sampah di lingkungan sekolah. Minggu 3–4: murid memilih jalur aksi — bank sampah, kerajinan daur ulang, atau kampanye. Minggu 5: eksekusi dengan anggaran Rp 150 ribu per kelompok. Minggu 6: showcase dan refleksi.\n\nHasilnya: 3 kelompok berhasil menghasilkan produk yang laku dijual di bazar sekolah, dan yang terpenting — murid belajar mengelola uang, berbicara di depan umum, dan bekerja dalam tim.\n\nResep keberhasilannya ada pada rubrik asesmen yang jelas sejak awal, dan guru yang berani mundur selangkah agar murid maju dua langkah.'},
+  {id:'p4', slug:'model-donasi-pelatihan-guru', cat:'OPINI', author:'Tim EduNusa', date:'2026-07-30', views:277,
+   title:'Mengapa Model Donasi Membuat Pelatihan Guru Lebih Merata',
+   excerpt:'Kanak-kanak di kota besar dan guru di pelosok seharusnya mendapat akses pelatihan yang sama.',
+   content:'Model pelatihan berbayar konvensional memiliki masalah tersembunyi: ia memilih siapa yang boleh tumbuh. Guru di sekolah swasta kecil, guru honorer, dan guru di daerah 3T sering tereliminasi oleh biaya — bukan karena kurang motivasi.\n\nModel donasi sukarela membalik logika itu: yang mampu membayar lebih, menopang yang belum mampu. Data kami menunjukkan 62% peserta berdonasi secara sukarela setelah merasakan manfaat pelatihan — dengan nominal rata-rata yang sehat untuk menopang operasional.\n\nTransparansi menjadi kunci: setiap donasi terekam, terkonfirmasi oleh admin, dan ditampilkan pada papan penghargaan. Donasi juga membuka akses materi rekaman — sebuah mekanisme yang membuat pemberi dan penerima sama-sama diuntungkan.'},
+  {id:'p5', slug:'checklist-digitalisasi-sekolah', cat:'PANDUAN', author:'Tim EduNusa', date:'2026-06-25', views:425,
+   title:'Checklist Digitalisasi Sekolah: Mulai dari Modul Mana?',
+   excerpt:'Jangan membeli sistem raksasa sebelum siap. Ini urutan modul yang terbukti paling mulus.',
+   content:'Banyak sekolah terjebak membeli sistem informasi raksasa yang akhirnya tidak terpakai penuh. Pengalaman kami mendampingi puluhan sekolah menunjukkan urutan adopsi yang lebih mulus.\n\nTahap 1: absensi digital — dampaknya langsung terasa, datanya jadi fondasi modul lain. Tahap 2: penilaian & rapor — menghemat ratusan jam kerja guru tiap semester. Tahap 3: keuangan/SPP. Tahap 4: PPDB Online menjelang tahun ajaran baru. Tahap 5: website profil sebagai etalase publik.\n\nPendekatan per modul memungkinkan anggaran tersebar, pelatihan pengguna terkendali, dan risiko kegagalan kecil. Gunakan kalkulator di bagian Modul & Harga untuk merencanakan bundel Anda — diskon otomatis berlaku untuk 3+ modul.'}
+];
+const FAQ_SEED = [
+  {q:'Apakah donasi wajib untuk mengikuti pelatihan?', a:'Tidak. Donasi 100% sukarela dan nominalnya bebas. Sebagian pelatihan kami GRATIS sepenuhnya. Donasi membantu operasional dan membuka akses materi rekaman eksklusif.'},
+  {q:'Bagaimana cara mendapatkan sertifikat?', a:'Setelah pelatihan Anda ikuti hingga selesai, panitia menerbitkan sertifikat dengan nama & email Anda. Buka detail pelatihan → tab Sertifikat → masukkan email yang sama saat mendaftar → unduh PNG. Setiap sertifikat memiliki kode unik untuk verifikasi.'},
+  {q:'Kapan materi rekaman terbuka untuk saya?', a:'Materi terbuka otomatis jika: (1) sesi memiliki akses terbuka, atau (2) donasi Anda telah dikonfirmasi admin. Cukup masukkan email yang sama dengan saat berdonasi pada tab Materi.'},
+  {q:'Apakah aplikasi bisa dicoba sebelum membeli modul?', a:'Ya. Kami menyediakan sesi demo via WhatsApp/Zoom tanpa biaya. Anda juga bisa memulai dari 1 modul, lalu menambah modul lain secara bertahap (dengan diskon bundel).'},
+  {q:'Bagaimana verifikasi keaslian sertifikat EduNusa?', a:'Setiap sertifikat memiliki kode unik (format EDU-SX-XXXX). Pihak pemeriksa cukup membandingkan kode, nama, dan email pada menu Sertifikat di situs ini, atau menghubungi panitia via WhatsApp.'}
+];
+
+/* demo-only stores */
+function demoAll(t) {
+  let a = null;
+  try { a = JSON.parse(localStorage.getItem('edv2_' + t) || 'null'); } catch(e) {}
+  if (!Array.isArray(a)) { a = SEEDS[t] ? JSON.parse(JSON.stringify(SEEDS[t]())) : []; demoSave(t, a); }
+  return a;
+}
+function demoSave(t, arr) { try { localStorage.setItem('edv2_' + t, JSON.stringify(arr)); } catch(e) {} }
+const SEEDS = {
+  sessions: () => SESSIONS_SEED,
+  modules: () => MODULES_SEED,
+  testis: () => TESTIS_SEED,
+  posts: () => POSTS_SEED,
+  faq: () => FAQ_SEED,
+  regs: () => [
+    {id:'r1', session_id:'s1', name:'Maya Sari', email:'maya.sari@mail.com', phone:'628123450001', job:'Guru SD', note:'', created_at:'2026-09-20T02:00:00Z'},
+    {id:'r2', session_id:'s1', name:'Ahmad Fauzi', email:'ahmad.fauzi@mail.com', phone:'628123450002', job:'Guru SMP', note:'', created_at:'2026-09-21T03:00:00Z'},
+    {id:'r3', session_id:'s1', name:'Dewi Lestari', email:'dewi.lestari@mail.com', phone:'628123450003', job:'Guru PAUD', note:'', created_at:'2026-09-22T04:00:00Z'},
+    {id:'r4', session_id:'s3', name:'Budi Santoso', email:'budi.santoso@mail.com', phone:'628123450004', job:'Guru BK', note:'', created_at:'2026-09-25T05:00:00Z'},
+    {id:'r5', session_id:'s3', name:'Rina Marlina', email:'rina.marlina@mail.com', phone:'628123450005', job:'Kepala Sekolah', note:'', created_at:'2026-09-26T06:00:00Z'},
+    {id:'r6', session_id:'s6', name:'Hendra Pratama', email:'hendra.pratama@mail.com', phone:'628123450006', job:'Operator Sekolah', note:'', created_at:'2026-10-01T07:00:00Z'},
+    {id:'r7', session_id:'s2', name:'Siti Aminah', email:'siti.aminah@mail.com', phone:'628123450007', job:'Guru B. Indonesia', note:'', created_at:'2026-10-02T08:00:00Z'},
+    {id:'r8', session_id:'s5', name:'Agus Wijaya', email:'agus.wijaya@mail.com', phone:'628123450008', job:'Wali Murid', note:'', created_at:'2026-10-05T09:00:00Z'}
+  ],
+  dons: () => [
+    {id:'d1', session_id:'s1', donor_name:'Hendra P.', email:'hendra@mail.com', amount:200000, message:'Semangat!', method:'Transfer Bank', status:'CONFIRMED', created_at:'2026-05-14T02:00:00Z'},
+    {id:'d2', session_id:'s1', donor_name:'Siti Aminah', email:'siti.aminah@mail.com', amount:500000, message:'Sukses EduNusa', method:'Transfer Bank', status:'CONFIRMED', created_at:'2026-05-28T02:00:00Z'},
+    {id:'d3', session_id:'s2', donor_name:'Yayasan Cerdas', email:'yc@yayasan.id', amount:1000000, message:'Untuk guru Indonesia', method:'Transfer Bank', status:'CONFIRMED', created_at:'2026-06-09T02:00:00Z'},
+    {id:'d4', session_id:'s1', donor_name:'Budi Santoso', email:'budi.santoso@mail.com', amount:150000, message:'', method:'QRIS', status:'CONFIRMED', created_at:'2026-06-21T02:00:00Z'},
+    {id:'d5', session_id:'s3', donor_name:'Guru Hebat ID', email:'gh@komunitas.id', amount:750000, message:'Lanjutkan!', method:'Transfer Bank', status:'CONFIRMED', created_at:'2026-07-05T02:00:00Z'},
+    {id:'d6', session_id:'s2', donor_name:'Maya Sari', email:'maya.sari@mail.com', amount:300000, message:'', method:'QRIS', status:'CONFIRMED', created_at:'2026-07-19T02:00:00Z'},
+    {id:'d7', session_id:'s1', donor_name:'PT Edu Tech', email:'csr@edutech.co.id', amount:2000000, message:'CSR pendidikan 2026', method:'Transfer Bank', status:'CONFIRMED', created_at:'2026-08-02T02:00:00Z'},
+    {id:'d8', session_id:'s3', donor_name:'Agus Wijaya', email:'agus.wijaya@mail.com', amount:250000, message:'', method:'QRIS', status:'CONFIRMED', created_at:'2026-08-17T02:00:00Z'},
+    {id:'d9', session_id:'s5', donor_name:'Rina M.', email:'rina.m@mail.com', amount:100000, message:'Terima kasih', method:'QRIS', status:'CONFIRMED', created_at:'2026-09-01T02:00:00Z'},
+    {id:'d10', session_id:'s1', donor_name:'Komunitas Guru Bahagia', email:'kgb@komunitas.id', amount:600000, message:'Kapan-kapan ke kota kami ya', method:'Transfer Bank', status:'CONFIRMED', created_at:'2026-09-15T02:00:00Z'},
+    {id:'d11', session_id:'s2', donor_name:'Dedi Kurniawan', email:'dedi.k@mail.com', amount:350000, message:'', method:'Transfer Bank', status:'CONFIRMED', created_at:'2026-10-03T02:00:00Z'},
+    {id:'d12', session_id:'s1', donor_name:'Anonim', email:'anon@mail.com', amount:50000, message:'test', method:'QRIS', status:'PENDING', created_at:'2026-10-19T02:00:00Z'}
+  ],
+  certs: () => [],
+  reqs: () => []
+};
+
+/* ---------------- state ---------------- */
+const state = {
+  sessions: [], modules: [], regs: [], dons: [], certs: [], testis: [], posts: [], reqs: [],
+  cfg: Object.assign({}, DEFAULT_CFG),
+  filterCat: 'Semua', openSess: null, claimCert: null,
+  donAmount: 0, reqPick: new Set(), loginMode: 'pin', adminAuthed: false, admTab: 'dash',
+  editing: {sesi:null, modul:null, media:null}
+};
+
+/* ---------------- Supabase engine (dual mode) ---------------- */
+const SB = {
+  on: false, client: null, ch: null, reason: '',
+  boot() {
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem('edunusa_sb_cfg') || 'null'); } catch(e) {}
+    if (localStorage.getItem('edunusa_sb_off') === '1') { this.off('Cloud dimatikan dari Pengaturan — Mode Demo aktif'); return; }
+    const key = (saved && saved.key) || CONFIG.SB_KEY;
+    const url = (saved && saved.url) || CONFIG.SB_URL;
+    if (!key) { this.off('Kunci Supabase belum diisi — Mode Demo aktif (data di browser ini)'); return; }
+    if (typeof supabase === 'undefined') { this.off('Pustaka Supabase tidak termuat (offline?) — Mode Demo aktif'); return; }
+    try { this.client = supabase.createClient(url, key); }
+    catch(e) { this.off('Koneksi Supabase gagal: ' + e.message + ' — Mode Demo aktif'); return; }
+    this.on = true;
+    /* Task 11 fix: verifikasi sesi admin sungguhan, hapus flag palsu */
+    this.client.auth.getSession().then(({data}) => {
+      if (data && data.session) { state.adminAuthed = true; }
+      else {
+        state.adminAuthed = false;
+        try { sessionStorage.removeItem('edunusa_admin'); } catch(e) {}
+      }
+    }).catch(() => {});
+  },
+  off(reason) { this.on = false; this.reason = reason || ''; },
+  friendlyError(e) {
+    const m = String((e && e.message) || e || '');
+    if (/row-level security|42501/i.test(m)) return 'Aksi ditolak keamanan database (RLS). Tekan Keluar, lalu masuk kembali di panel Admin dengan EMAIL + PASSWORD akun Supabase Anda.';
+    if (/jwt|expired|token|invalid session/i.test(m)) return 'Sesi login kedaluwarsa. Silakan Keluar lalu login ulang di panel Admin.';
+    if (/duplicate key/i.test(m)) return 'Data sudah ada (duplikat).';
+    if (/failed to fetch|network/i.test(m)) return 'Jaringan terputus dari Supabase. Periksa koneksi internet.';
+    return m || 'Terjadi kesalahan tak terduga.';
+  },
+  async list(t) {
+    if (this.on) {
+      const {data, error} = await this.client.from(PREFIX + t).select('*');
+      if (error) { console.warn('list ' + t, error); throw new Error(this.friendlyError(error)); }
+      return data || [];
+    }
+    return demoAll(t);
+  },
+  async insert(t, obj) {
+    if (this.on) {
+      const {data, error} = await this.client.from(PREFIX + t).insert(obj).select();
+      if (error) throw new Error(this.friendlyError(error));
+      return (data && data[0]) || obj;
+    }
+    const arr = demoAll(t);
+    const o = Object.assign({id: uid()}, obj);
+    arr.push(o); demoSave(t, arr);
+    return o;
+  },
+  async update(t, id, patch) {
+    if (this.on) {
+      const {data, error} = await this.client.from(PREFIX + t).update(patch).eq('id', id).select();
+      if (error) throw new Error(this.friendlyError(error));
+      return (data && data[0]) || null;
+    }
+    const arr = demoAll(t);
+    const i = arr.findIndex(x => String(x.id) === String(id));
+    if (i > -1) { arr[i] = Object.assign({}, arr[i], patch); demoSave(t, arr); return arr[i]; }
+    return null;
+  },
+  async remove(t, id) {
+    if (this.on) {
+      const {error} = await this.client.from(PREFIX + t).delete().eq('id', id);
+      if (error) throw new Error(this.friendlyError(error));
+      return true;
+    }
+    demoSave(t, demoAll(t).filter(x => String(x.id) !== String(id)));
+    return true;
+  },
+  async getConfig() {
+    if (this.on) {
+      try {
+        const {data, error} = await this.client.from(PREFIX + 'config').select('*');
+        if (error) { console.warn('config', error); return readCfgLocal(); }
+        const m = {};
+        (data || []).forEach(r => { m[r.key] = r.value; });
+        return Object.assign({}, DEFAULT_CFG, m);
+      } catch(e) { return readCfgLocal(); }
+    }
+    return readCfgLocal();
+  },
+  async saveConfig(patch) {
+    try { writeCfgMerge(patch); } catch(e) {}
+    if (this.on) {
+      const rows = Object.keys(patch).map(k => ({key: k, value: patch[k]}));
+      const {error} = await this.client.from(PREFIX + 'config').upsert(rows, {onConflict: 'key'});
+      if (error) { toast(this.friendlyError(error), 'err'); return false; }
+    }
+    return true;
+  },
+  async rpc(fn, params) {
+    if (!this.on) return;
+    try { const {error} = await this.client.rpc(fn, params); if (error) console.warn('rpc ' + fn, error); }
+    catch(e) { console.warn('rpc ' + fn, e); }
+  },
+  watchRealtime() {
+    if (!this.on || !this.client) return;
+    const tables = ['sessions','modules','regs','dons','certs','testis','posts','reqs','config'];
+    let deb = null;
+    const refresh = debounce(async () => {
+      try { await refreshAll(false); toast('🔄 Data diperbarui (realtime)', 'ok'); } catch(e) {}
+    }, 700);
+    this.ch = this.client.channel('edunusa-v2');
+    const self = this;
+    tables.forEach(t => {
+      self.ch.on('postgres_changes', {event:'*', schema:'public', table: PREFIX + t}, refresh);
+    });
+    this.ch.subscribe(() => setBadge());
+  }
+};
+function readCfgLocal() {
+  let m = {};
+  try { m = JSON.parse(localStorage.getItem('edunusa_config') || '{}'); } catch(e) {}
+  return Object.assign({}, DEFAULT_CFG, m);
+}
+function writeCfgMerge(patch) {
+  const cur = readCfgLocal();
+  Object.assign(cur, patch);
+  try { localStorage.setItem('edunusa_config', JSON.stringify(cur)); } catch(e) {}
+}
+function cfg(k) { const v = state.cfg[k]; return (v === undefined || v === null) ? DEFAULT_CFG[k] : v; }
+
+/* ---------------- data refresh ---------------- */
+async function refreshAll(reRender) {
+  if (typeof reRender === 'undefined') reRender = true;
+  const jobs = ['sessions','modules','regs','dons','certs','testis','posts','reqs'].map(async t => {
+    try { state[t] = await SB.list(t); } catch(e) { console.warn(t, e.message); }
+  });
+  jobs.push((async () => { state.cfg = await SB.getConfig(); })());
+  await Promise.all(jobs);
+  if (reRender) renderAll();
+}
+function setBadge() {
+  const b = qs('#syncBadge');
+  if (SB.on) { b.textContent = '☁️ Tersambung Supabase'; b.classList.add('cloud'); }
+  else { b.textContent = '💾 Mode Demo (lokal)'; b.classList.remove('cloud'); }
+}
+
+/* ---------------- lookups ---------------- */
+const sessById = id => state.sessions.find(s => s.id === id);
+const modById = id => state.modules.find(m => m.id === id);
+const regsOf = sid => state.regs.filter(r => r.session_id === sid);
+const donsOf = sid => state.dons.filter(d => d.session_id === sid && String(d.status || '').toUpperCase() === 'CONFIRMED');
+const certsOf = sid => state.certs.filter(c => c.session_id === sid && !c.revoked);
+const confirmedTotal = () => state.dons.filter(d => String(d.status || '').toUpperCase() === 'CONFIRMED').reduce((a, d) => a + Number(d.amount || 0), 0);
+function leaderboard(sid) {
+  const src = sid ? donsOf(sid) : state.dons.filter(d => String(d.status || '').toUpperCase() === 'CONFIRMED');
+  const map = {};
+  src.forEach(d => { const k = d.donor_name || 'Anonim'; map[k] = (map[k] || 0) + Number(d.amount || 0); });
+  return Object.keys(map).map(k => ({name: k, total: map[k]})).sort((a, b) => b.total - a.total).slice(0, 5);
+}
+
+/* ---------------- site renders ---------------- */
+function logoHTML(cls) {
+  return cfg('site_logo')
+    ? '<img class="brand-logo ' + (cls || '') + '" src="' + esc(cfg('site_logo')) + '" alt="Logo">'
+    : '<div class="brand-mark ' + (cls || '') + '">E</div>';
+}
+function renderBrand() {
+  qs('#brandBox').innerHTML = logoHTML() + '<div><div class="brand-name">Edu<span>Nusa</span></div><div class="brand-sub">Pelatihan · Donasi · Aplikasi</div></div>';
+  qs('#footBrand').innerHTML = logoHTML() + '<b>Edu<span>Nusa</span></b>';
+  try { qs('#favicon').href = cfg('site_logo') || qs('#favicon').getAttribute('href'); } catch(e) {}
+}
+function renderFooter() {
+  const wa = cfg('wa_number');
+  qs('#footKontak').innerHTML =
+    '<a href="' + waLink(wa, 'Halo EduNusa! Saya ingin bertanya.') + '" target="_blank" rel="noopener">💬 WhatsApp: +' + esc(wa) + '</a>' +
+    '<a href="mailto:' + esc(cfg('contact_email')) + '">✉️ ' + esc(cfg('contact_email')) + '</a>';
+  qs('#footBank').innerHTML = esc(cfg('bank_info')).split('\n').map(l => '<p>' + esc(l) + '</p>').join('');
+  qs('#waFloat').href = waLink(wa, 'Halo EduNusa! Saya ingin bertanya tentang pelatihan.');
+}
+function renderStats() {
+  qs('#stSess').textContent = state.sessions.length;
+  qs('#stRegs').textContent = state.regs.length;
+  qs('#stDon').textContent = fmtRp(confirmedTotal());
+  qs('#stCert').textContent = state.certs.filter(c => !c.revoked).length;
+}
+function renderChips() {
+  const cats = ['Semua'].concat(Array.from(new Set(state.sessions.map(s => s.cat))));
+  qs('#sessChips').innerHTML = cats.map(c =>
+    '<button class="chip' + (state.filterCat === c ? ' on' : '') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>').join('');
+  qsa('#sessChips .chip').forEach(ch => ch.onclick = () => { state.filterCat = ch.dataset.cat; renderChips(); renderSessions(); });
+}
+function renderSessions() {
+  const list = state.sessions.slice().sort((a, b) => (a.sort || 0) - (b.sort || 0))
+    .filter(s => state.filterCat === 'Semua' || s.cat === state.filterCat);
+  qs('#sessGrid').innerHTML = list.map(s => {
+    const done = s.status === 'selesai';
+    const pct = s.quota ? Math.min(100, Math.round((Number(s.taken || 0) / Number(s.quota)) * 100)) : 0;
+    return '<article class="card" data-sid="' + esc(s.id) + '">' +
+      '<div class="sess-body">' +
+        '<div class="sess-tags"><span class="tag">' + esc(s.cat) + '</span><span class="tag lev">' + esc(s.lev) + '</span>' + (done ? '<span class="tag done">✓ Selesai</span>' : '') + '</div>' +
+        '<h3>' + esc(s.title) + '</h3>' +
+        '<div class="meta2">' +
+          '<div><div class="k">FASILITATOR</div><div class="v">' + esc(s.fac) + '<small>' + esc(s.facT || '') + '</small></div></div>' +
+          '<div><div class="k">JADWAL</div><div class="v">' + esc(s.sched) + '<small>' + esc(s.time || '') + '</small></div></div>' +
+          '<div><div class="k">DURASI & MODE</div><div class="v">' + esc(s.dur) + ' (' + esc(s.jp) + ' JP)<small>' + esc(s.mode) + '</small></div></div>' +
+          '<div><div class="k">INVESTASI</div><div class="v">' + esc(s.price) + '<small>' + esc(s.priceNote || '') + '</small></div></div>' +
+        '</div>' +
+        '<div class="mat-preview">🎬 Materi: ' + s.mats.map(m => esc(m)).join(' · ') + '</div>' +
+        '<div class="quota">🟩 Sisa kuota: <b>' + Math.max(0, Number(s.quota || 0) - Number(s.taken || 0)) + '</b> dari ' + esc(s.quota) + (done ? ' · pelatihan telah selesai — sertifikat tersedia' : ' · aman, daftar sekarang') + '</div>' +
+      '</div>' +
+      '<div class="foot"><button class="btn btn-teal">Lihat Detail &amp; Daftar →</button></div>' +
+    '</article>';
+  }).join('') || '<div class="empty">Belum ada sesi pada kategori ini.</div>';
+  qsa('#sessGrid .card').forEach(c => c.onclick = () => openSession(c.dataset.sid));
+}
+function renderModules() {
+  qs('#modGrid').innerHTML = state.modules.slice().sort((a, b) => (a.sort || 0) - (b.sort || 0)).map(m =>
+    '<article class="card mod-card">' +
+      '<div class="mod-top"><div class="mod-ico">🧩</div><div class="price">' + fmtRp(m.price) + '<small style="display:block;font-size:10.5px;color:var(--mut);font-weight:600;text-align:right">per modul</small></div></div>' +
+      '<h3>' + esc(m.title) + '</h3><p>' + esc(m.desc) + '</p>' +
+      '<button class="btn btn-line btn-sm" data-mid="' + esc(m.id) + '">➕ Pilih untuk Konsultasi</button>' +
+    '</article>').join('');
+  qsa('#modGrid [data-mid]').forEach(b => b.onclick = () => {
+    state.reqPick.add(b.dataset.mid);
+    renderReqPick();
+    document.querySelector('#jasa').scrollIntoView({behavior:'smooth'});
+    toast('Modul ditambahkan ke permintaan konsultasi', 'ok');
+  });
+}
+function renderReqPick() {
+  const mods = state.modules.slice().sort((a, b) => (a.sort || 0) - (b.sort || 0));
+  qs('#reqPick').innerHTML = mods.map(m =>
+    '<label class="pick-item' + (state.reqPick.has(m.id) ? ' on' : '') + '">' +
+      '<input type="checkbox" data-mid="' + esc(m.id) + '"' + (state.reqPick.has(m.id) ? ' checked' : '') + '>' +
+      '<span class="t">' + esc(m.title) + '</span><span class="p">' + fmtRp(m.price) + '</span>' +
+    '</label>').join('');
+  qsa('#reqPick input').forEach(i => i.onchange = () => {
+    if (i.checked) state.reqPick.add(i.dataset.mid); else state.reqPick.delete(i.dataset.mid);
+    renderReqPick();
+  });
+  const picked = Array.from(state.reqPick).map(id => modById(id)).filter(Boolean);
+  const raw = picked.reduce((a, m) => a + Number(m.price || 0), 0);
+  const disc = picked.length >= 7 ? .20 : picked.length >= 5 ? .15 : picked.length >= 3 ? .10 : 0;
+  const impl = picked.length >= 4 ? 0 : (picked.length ? 1500000 : 0);
+  const total = Math.round(raw * (1 - disc)) + impl;
+  qs('#reqSummary').innerHTML =
+    '<div class="row"><span>Modul dipilih</span><b>' + picked.length + '</b></div>' +
+    '<div class="row"><span>Subtotal</span><span>' + fmtRp(raw) + '</span></div>' +
+    '<div class="row"><span>Diskon bundel</span><span>' + (disc ? '− ' + (disc * 100) + '%' : '—') + '</span></div>' +
+    '<div class="row"><span>Biaya implementasi</span><span>' + (impl ? fmtRp(impl) : (picked.length >= 4 ? 'GRATIS 🎉' : '—')) + '</span></div>' +
+    '<div class="row total"><span>Estimasi total</span><span>' + (picked.length ? fmtRp(total) : 'pilih modul…') + '</span></div>';
+}
+function renderTestis() {
+  const list = state.testis.filter(t => t.approved !== false);
+  qs('#testiGrid').innerHTML = list.slice(0, 8).map(t =>
+    '<article class="card testi">' +
+      '<div class="stars">' + '★'.repeat(Number(t.rating || 5)) + '☆'.repeat(5 - Number(t.rating || 5)) + '</div>' +
+      '<p>"' + esc(t.content) + '"</p>' +
+      '<div class="who"><div class="ava">' + esc((t.name || '?').trim().charAt(0).toUpperCase()) + '</div><div><b>' + esc(t.name) + '</b><span>' + esc(t.role || '') + ' · ' + esc(t.org || '') + '</span></div></div>' +
+    '</article>').join('') || '<div class="empty">Belum ada testimoni.</div>';
+}
+function renderPosts() {
+  qs('#blogGrid').innerHTML = state.posts.slice().sort((a, b) => String(b.date).localeCompare(String(a.date))).map(p =>
+    '<article class="card post-card" data-pid="' + esc(p.id) + '">' +
+      '<div class="post-body">' +
+        '<span class="post-cat">' + esc(p.cat || '') + '</span>' +
+        '<h3>' + esc(p.title) + '</h3>' +
+        '<p>' + esc(p.excerpt || '') + '</p>' +
+        '<div class="post-meta"><span>✍️ ' + esc(p.author || '') + '</span><span>📅 ' + fmtDateID(p.date) + '</span><span>👁 ' + Number(p.views || 0) + '</span></div>' +
+      '</div>' +
+    '</article>').join('');
+  qsa('#blogGrid .post-card').forEach(c => c.onclick = () => openPost(c.dataset.pid));
+}
+function renderLBs() {
+  qs('#lbAll').innerHTML = leaderboard(null).map((x, i) =>
+    '<li><span class="rank">' + (i + 1) + '</span><span>' + esc(x.name) + '</span><b>' + fmtRp(x.total) + '</b></li>').join('')
+    || '<li style="color:var(--mut)">Belum ada donasi terkonfirmasi.</li>';
+  const lb = qs('#lbSession');
+  if (lb && state.openSess) {
+    lb.innerHTML = leaderboard(state.openSess).map((x, i) =>
+      '<li><span class="rank">' + (i + 1) + '</span><span>' + esc(x.name) + '</span><b>' + fmtRp(x.total) + '</b></li>').join('')
+      || '<li style="color:var(--mut)">Belum ada donasi terkonfirmasi untuk sesi ini. Jadilah yang pertama!</li>';
+  }
+}
+function renderDonPresets() {
+  const presets = [[25000,'Buku bacaan'],[50000,'Alat tulis'],[100000,'Paket materi'],[200000,'Sponsor 1 peserta'],[500000,'Sponsor 3 peserta'],[1000000,'Sponsor kelas']];
+  qs('#donPresets').innerHTML = presets.map(p =>
+    '<button type="button" class="preset' + (state.donAmount === p[0] ? ' on' : '') + '" data-v="' + p[0] + '">' + fmtRp(p[0]) + '<small>' + p[1] + '</small></button>').join('');
+  qsa('#donPresets .preset').forEach(b => b.onclick = () => {
+    state.donAmount = Number(b.dataset.v);
+    qs('#donCustom').value = '';
+    renderDonPresets();
+  });
+  const opts = '<option value="">Donasi umum (tanpa sesi)</option>' + state.sessions.map(s => '<option value="' + esc(s.id) + '">' + esc(s.title) + '</option>').join('');
+  const sel = qs('#donSession');
+  const cur = sel.value;
+  sel.innerHTML = opts;
+  if (cur) sel.value = cur;
+  qs('#donBankBox').innerHTML = '<b>💳 Tujuan donasi:</b><br>' + esc(cfg('bank_info')).split('\n').map(esc).join('<br>');
+}
+function renderChart() {
+  const cv = qs('#donChart'); if (!cv) return;
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  const months = [];
+  const now = new Date();
+  for (let i = 5; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); months.push(d); }
+  const confirmed = state.dons.filter(d => String(d.status || '').toUpperCase() === 'CONFIRMED');
+  const data = months.map(m => confirmed.reduce((a, d) => {
+    const dd = new Date(d.created_at || d.date || Date.now());
+    return (dd.getFullYear() === m.getFullYear() && dd.getMonth() === m.getMonth()) ? a + Number(d.amount || 0) : a;
+  }, 0));
+  let acc = 0; const cum = data.map(v => (acc += v));
+  const max = Math.max(...cum, 100000);
+  const pad = {l: 12, r: 12, t: 18, b: 34};
+  const bw = (W - pad.l - pad.r) / 6;
+  const bh = H - pad.t - pad.b;
+  ctx.fillStyle = '#f0fdfa'; ctx.fillRect(0, 0, W, H);
+  const grid = ctx.createLinearGradient(0, pad.t, 0, H - pad.b);
+  grid.addColorStop(0, 'rgba(20,184,166,.35)'); grid.addColorStop(1, 'rgba(20,184,166,.02)');
+  cum.forEach((v, i) => {
+    const h = Math.max(3, (v / max) * bh);
+    const x = pad.l + i * bw + bw * 0.18;
+    ctx.fillStyle = grid;
+    ctx.beginPath();
+    const r = Math.min(8, bw * 0.3);
+    const w = bw * 0.64, y = H - pad.b - h;
+    ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#0f766e'; ctx.font = '700 10.5px "Plus Jakarta Sans",sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(v >= 1000000 ? (v / 1000000).toFixed(1).replace('.0','') + 'jt' : Math.round(v / 1000) + 'rb', x + w / 2, y - 5);
+    ctx.fillStyle = '#64748b'; ctx.font = '600 10px "Plus Jakarta Sans",sans-serif';
+    ctx.fillText(months[i].toLocaleDateString('id-ID', {month:'short'}), x + w / 2, H - 14);
+  });
+  ctx.strokeStyle = '#e2e8f0'; ctx.beginPath(); ctx.moveTo(0, H - pad.b); ctx.lineTo(W, H - pad.b); ctx.stroke();
+}
+function renderFAQ() {
+  qs('#faqBox').innerHTML = (state.posts && FAQ_SEED || []).map(f =>
+    '<details><summary>' + esc(f.q) + '</summary><p>' + esc(f.a) + '</p></details>').join('');
+}
+function renderAll() {
+  renderBrand(); renderFooter(); renderStats(); renderChips(); renderSessions();
+  renderModules(); renderReqPick(); renderTestis(); renderPosts(); renderLBs();
+  renderDonPresets(); renderChart(); renderFAQ();
+}
+
+/* ---------------- session modal ---------------- */
+function openSession(id) {
+  const s = sessById(id); if (!s) return;
+  state.openSess = id;
+  state.claimCert = null;
+  qs('#smTitle').textContent = s.title;
+  qs('#smTags').innerHTML = '<span class="tag">' + esc(s.cat) + '</span><span class="tag lev">' + esc(s.lev) + '</span>' +
+    (s.status === 'selesai' ? '<span class="tag done">✓ Pelatihan Selesai</span>' : '');
+  qs('#smMeta').innerHTML =
+    '<div><div class="k">FASILITATOR</div><div class="v">' + esc(s.fac) + '<small>' + esc(s.facT || '') + '</small></div></div>' +
+    '<div><div class="k">JADWAL</div><div class="v">' + esc(s.sched) + '<small>' + esc(s.time || '') + '</small></div></div>' +
+    '<div><div class="k">DURASI & MODE</div><div class="v">' + esc(s.dur) + ' (' + esc(s.jp) + ' JP)<small>' + esc(s.mode) + '</small></div></div>' +
+    '<div><div class="k">INVESTASI</div><div class="v">' + esc(s.price) + '<small>' + esc(s.priceNote || '') + '</small></div></div>';
+  qs('#smMats').innerHTML = '🎬 <b>Materi yang Dipelajari</b><br>' + s.mats.map(m => '✓ ' + esc(m)).join('<br>');
+  qs('#donSessName').textContent = s.title;
+  qs('#regForm').style.display = '';
+  qs('#regDone').style.display = 'none';
+  qs('#regSubmit').disabled = false;
+  qs('#certEmail').value = '';
+  qs('#certResult').innerHTML = '';
+  qs('#certHint').textContent = s.status === 'selesai'
+    ? '🎓 Pelatihan ini telah selesai. Masukkan email yang Anda gunakan saat mendaftar untuk mengunduh sertifikat.'
+    : '🎓 Selesaikan pelatihan ini lalu unduh sertifikat Anda dengan memasukkan email yang sama saat mendaftar.';
+  smTab('daftar');
+  renderMateri();
+  renderLBs();
+  openModal('sessionModal');
+}
+function smTab(k) {
+  qsa('#smTabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === k));
+  qsa('#sessionModal .pane').forEach(p => p.classList.remove('on'));
+  const pane = qs('#pane' + k.charAt(0).toUpperCase() + k.slice(1));
+  if (pane) pane.classList.add('on');
+  if (k === 'materi') renderMateri();
+  if (k === 'rank') renderLBs();
+}
+function myConfirmedDon(sid) {
+  const em = normEmail(localStorage.getItem('edunusa_me') || '');
+  if (!em) return null;
+  return state.dons.find(d => d.session_id === sid && String(d.status || '').toUpperCase() === 'CONFIRMED' && normEmail(d.email) === em) || null;
+}
+function renderMateri() {
+  const s = sessById(state.openSess); if (!s) return;
+  const box = qs('#matBox');
+  const unlocked = s.freeAccess || !!myConfirmedDon(s.id);
+  let html = '';
+  if (s.freeAccess) html += '<div class="open-box">🔓 <b>Akses terbuka</b> — terima kasih atas donasi terbaik Anda. Selamat menikmati!</div>';
+  else if (unlocked) html += '<div class="open-box">✅ <b>Akses dibuka</b> — terima kasih atas donasi Anda, ' + esc((myConfirmedDon(s.id) || {}).donor_name || '') + '. Selamat menikmati!</div>';
+  else html += '<div class="lock-box"><b>🔒 Materi eksklusif donatur</b><p style="font-size:13px;color:var(--ink2);margin:6px 0 10px">Masukkan email yang sama dengan saat berdonasi untuk membuka rekaman video & audio.</p>' +
+    '<div class="cert-claim" style="max-width:420px;margin:0 auto"><input class="f-in" id="matEmail" type="email" placeholder="email donatur"><button class="btn btn-amber" id="btnMatUnlock">Buka</button></div></div>';
+  html += '<div style="margin-top:14px">' + (s.media || []).map(m => {
+    const isOpen = unlocked || !m.locked;
+    return '<div class="mat-item"' + (isOpen ? '' : ' style="opacity:.55"') + '>' +
+      '<div class="mat-ico">' + (m.type === 'video' ? '🎥' : m.type === 'audio' ? '🎧' : '🔗') + '</div>' +
+      '<div><div class="t">' + esc(m.title) + '</div><div class="k">' + (m.type === 'video' ? 'Video' : m.type === 'audio' ? 'Audio' : 'Tautan') + (m.locked && !unlocked ? ' · 🔒 donatur' : '') + '</div></div>' +
+      '<div class="right">' + (isOpen
+        ? (m.type === 'link' ? '<a class="btn btn-line btn-sm" href="' + esc(m.url) + '" target="_blank" rel="noopener">Buka</a>'
+          : '<button class="btn btn-line btn-sm" data-play="' + esc(m.id) + '">▶ Putar</button>')
+        : '<span class="badge pend">TERKUNCI</span>') + '</div></div>';
+  }).join('') + '</div>';
+  if (unlocked) html += '<div id="matPlayer" style="margin-top:12px"></div>';
+  box.innerHTML = html;
+  const ub = qs('#btnMatUnlock');
+  if (ub) ub.onclick = () => {
+    const em = normEmail(qs('#matEmail').value);
+    if (!validEmail(em)) { toast('Masukkan email yang valid', 'warn'); return; }
+    localStorage.setItem('edunusa_me', em);
+    renderMateri();
+  };
+  qsa('#matBox [data-play]').forEach(b => b.onclick = () => {
+    const m = (s.media || []).find(x => x.id === b.dataset.play); if (!m) return;
+    const p = qs('#matPlayer');
+    p.innerHTML = m.type === 'video'
+      ? '<video controls style="width:100%;border-radius:12px" src="' + esc(m.url) + '"></video>'
+      : '<audio controls style="width:100%" src="' + esc(m.url) + '"></audio>';
+    p.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+}
+
+/* ---------------- register / donasi / testi / request ---------------- */
+async function submitReg(e) {
+  e.preventDefault();
+  const s = sessById(state.openSess); if (!s) return;
+  const name = qs('#regName').value.trim(), email = normEmail(qs('#regEmail').value),
+        phone = qs('#regPhone').value.trim();
+  if (!name || !validEmail(email) || !phone) { toast('Lengkapi nama, email, dan WhatsApp', 'warn'); return; }
+  const btn = qs('#regSubmit'); btn.disabled = true;
+  try {
+    await SB.insert('regs', {session_id: s.id, name, email, phone, job: qs('#regJob').value.trim(), note: qs('#regNote').value.trim(), created_at: new Date().toISOString()});
+    localStorage.setItem('edunusa_me', email);
+    s.taken = Number(s.taken || 0) + 1;
+    qs('#regForm').style.display = 'none';
+    const done = qs('#regDone');
+    done.style.display = 'block';
+    done.innerHTML = '<h3>✅ Pendaftaran Berhasil!</h3><p>Terima kasih, <b>' + esc(name) + '</b>. Kami akan menghubungi Anda via WhatsApp.<br>Simpan email ini — nanti dipakai untuk <b>mengunduh sertifikat</b> 🎓</p>' +
+      '<button class="btn btn-amber btn-sm" style="margin-top:10px" id="btnRegDon">❤️ Ingin berdonasi sukarela?</button>';
+    const bd = qs('#btnRegDon');
+    if (bd) bd.onclick = () => { closeModal('sessionModal'); document.querySelector('#donasi').scrollIntoView({behavior:'smooth'}); const sel = qs('#donSession'); if (sel) sel.value = s.id; };
+    toast('Pendaftaran berhasil!', 'ok');
+    await refreshAll();
+  } catch(err) { toast(err.message, 'err'); btn.disabled = false; }
+}
+async function submitDon() {
+  const amount = qs('#donCustom').value ? Number(qs('#donCustom').value) : state.donAmount;
+  const name = qs('#donName').value.trim(), email = normEmail(qs('#donEmail').value);
+  if (!amount || amount < 1000) { toast('Pilih atau isi nominal donasi (min Rp 1.000)', 'warn'); return; }
+  if (!name || !validEmail(email)) { toast('Lengkapi nama & email donatur', 'warn'); return; }
+  try {
+    await SB.insert('dons', {session_id: qs('#donSession').value || null, donor_name: name, email, amount,
+      message: qs('#donMsg').value.trim(), method: qs('#donMethod').value, status: 'PENDING', created_at: new Date().toISOString()});
+    localStorage.setItem('edunusa_me', email);
+    toast('Donasi tercatat (PENDING). Silakan transfer lalu tunggu konfirmasi admin.', 'ok');
+    qs('#donCustom').value = ''; qs('#donMsg').value = ''; state.donAmount = 0; renderDonPresets();
+    await refreshAll();
+  } catch(err) { toast(err.message, 'err'); }
+}
+async function submitTesti() {
+  const name = qs('#tName').value.trim(), content = qs('#tContent').value.trim();
+  if (!name || !content) { toast('Lengkapi nama & isi testimoni', 'warn'); return; }
+  try {
+    await SB.insert('testis', {name, role: qs('#tRole').value.trim(), org: qs('#tOrg').value.trim(), rating: Number(qs('#tRating').value), content, approved: true, created_at: new Date().toISOString()});
+    closeModal('testiModal');
+    ['tName','tRole','tOrg','tContent'].forEach(i => qs('#' + i).value = '');
+    toast('Terima kasih! Testimoni Anda tampil di halaman.', 'ok');
+    await refreshAll();
+  } catch(err) { toast(err.message, 'err'); }
+}
+async function submitReq() {
+  const name = qs('#reqName').value.trim(), email = normEmail(qs('#reqEmail').value), phone = qs('#reqPhone').value.trim();
+  if (!name || !validEmail(email) || !phone) { toast('Lengkapi nama, email, dan WhatsApp', 'warn'); return; }
+  if (!state.reqPick.size) { toast('Pilih minimal 1 modul terlebih dulu', 'warn'); return; }
+  try {
+    const picked = Array.from(state.reqPick).map(id => (modById(id) || {}).title).filter(Boolean);
+    await SB.insert('reqs', {name, email, phone, org: qs('#reqOrg').value.trim(), modules: picked.join(', '), message: qs('#reqMsg').value.trim(), status: 'BARU', created_at: new Date().toISOString()});
+    toast('Permintaan terkirim! Tim kami akan menghubungi Anda via WhatsApp.', 'ok');
+    state.reqPick = new Set(); renderReqPick();
+    ['reqName','reqEmail','reqPhone','reqOrg','reqMsg'].forEach(i => qs('#' + i).value = '');
+  } catch(err) { toast(err.message, 'err'); }
+}
+
+/* ---------------- blog modal ---------------- */
+function openPost(id) {
+  const p = state.posts.find(x => x.id === id); if (!p) return;
+  qs('#bmCat').textContent = p.cat || '';
+  qs('#bmTitle').textContent = p.title;
+  qs('#bmMeta').innerHTML = '<span>✍️ ' + esc(p.author || '') + '</span><span>📅 ' + fmtDateID(p.date) + '</span><span>👁 ' + (Number(p.views || 0) + 1) + ' kali dibaca</span>';
+  qs('#bmBody').innerHTML = String(p.content || '').split('\n\n').map(par => '<p style="margin-bottom:14px">' + esc(par) + '</p>').join('');
+  openModal('blogModal');
+  p.views = Number(p.views || 0) + 1;
+  if (SB.on) {
+    if (p.slug) SB.rpc('increment_post_views', {p_slug: p.slug});
+    else SB.update('posts', p.id, {views: p.views}).catch(() => {});
+  } else {
+    demoSave('posts', state.posts);
+  }
+}
+
+/* ---------------- SERTIFIKAT: klaim, render, unduh, WA ---------------- */
+function certCodeFor(sid) { return 'EDU-' + String(sid || 'S').toUpperCase() + '-' + randCode(4); }
+async function certClaim() {
+  const sid = state.openSess; const s = sessById(sid); if (!s) return;
+  const em = normEmail(qs('#certEmail').value);
+  if (!validEmail(em)) { toast('Masukkan email yang valid', 'warn'); return; }
+  const res = qs('#certResult');
+  res.innerHTML = '<div class="empty">⏳ Memeriksa sertifikat…</div>';
+  let cert = null;
+  try {
+    const list = state.certs.length ? state.certs : await SB.list('certs');
+    state.certs = list;
+    cert = list.find(c => c.session_id === sid && normEmail(c.email) === em && !c.revoked) || null;
+  } catch(err) { res.innerHTML = '<div class="empty">❌ ' + esc(err.message) + '</div>'; return; }
+  if (!cert) {
+    res.innerHTML = '<div class="empty">😕 Sertifikat belum ditemukan untuk <b>' + esc(em) + '</b> pada pelatihan ini.<br>Pastikan Anda terdaftar & pelatihan telah selesai, atau hubungi panitia via WhatsApp.</div>';
+    return;
+  }
+  state.claimCert = cert;
+  res.innerHTML =
+    '<div class="cert-view"><canvas id="certPreview" width="672" height="475"></canvas>' +
+    '<div class="cert-actions">' +
+      '<button class="btn btn-teal" id="btnCertDl">⬇️ Unduh PNG</button>' +
+      '<input class="f-in" id="certWaPhone" placeholder="No. WA tujuan (cth. 08…)" value="' + esc((regsOf(sid).find(r => normEmail(r.email) === em) || {}).phone || '') + '">' +
+      '<button class="btn btn-amber" id="btnCertWa">💬 Kirim via WA</button>' +
+    '</div>' +
+    '<p class="hint" style="margin-top:8px">Kode sertifikat: <b>' + esc(cert.code) + '</b> · diterbitkan ' + fmtDateID(cert.issued_at) + '</p></div>';
+  drawCert(qs('#certPreview'), cert, s, 0.42);
+  qs('#btnCertDl').onclick = () => downloadCert(cert, s);
+  qs('#btnCertWa').onclick = () => {
+    const ph = qs('#certWaPhone').value.trim();
+    if (ph.replace(/[^0-9]/g, '').length < 9) { toast('Masukkan nomor WhatsApp yang valid', 'warn'); return; }
+    window.open(waLink(ph, certWaMsg(cert, s, em)), '_blank');
+  };
+}
+function certWaMsg(cert, s, email) {
+  const site = location.href.split('#')[0];
+  return '🎓 *SERTIFIKAT EDUNUSA*\n\n' +
+    'Selamat *' + (cert.name || '') + '*!\n' +
+    'Anda telah menyelesaikan pelatihan:\n*' + (s ? s.title : '') + '*\n\n' +
+    '🧾 Kode Sertifikat: *' + cert.code + '*\n' +
+    '📅 Diterbitkan: ' + fmtDateID(cert.issued_at) + '\n\n' +
+    'Cara unduh sertifikat:\n' +
+    '1. Buka ' + site + '\n' +
+    '2. Pilih pelatihan "' + (s ? s.title : '') + '"\n' +
+    '3. Tab 🎓 Sertifikat → masukkan email: ' + (email || cert.email || '') + '\n\n' +
+    'Salam,\n_Tim EduNusa_';
+}
+/* canvas renderer sertifikat — dipakai pratinjau & unduhan */
+function drawCert(cv, cert, s, scale) {
+  if (!cv) return;
+  const W = 1600, H = 1131;
+  cv.width = Math.round(W * scale); cv.height = Math.round(H * scale);
+  const x = cv.getContext('2d');
+  x.scale(scale, scale);
+  const c1 = cfg('cert_color1') || '#0f766e', c2 = cfg('cert_color2') || '#f59e0b';
+  x.fillStyle = '#fffef9'; x.fillRect(0, 0, W, H);
+  /* dekor sudut */
+  x.fillStyle = hexA(c2, .10);
+  x.beginPath(); x.arc(0, 0, 190, 0, 7); x.fill();
+  x.beginPath(); x.arc(W, H, 230, 0, 7); x.fill();
+  x.fillStyle = hexA(c1, .07);
+  x.beginPath(); x.arc(W, 0, 150, 0, 7); x.fill();
+  x.beginPath(); x.arc(0, H, 150, 0, 7); x.fill();
+  /* bingkai ganda */
+  x.strokeStyle = c1; x.lineWidth = 10; roundRect(x, 34, 34, W - 68, H - 68, 18); x.stroke();
+  x.strokeStyle = c2; x.lineWidth = 2; roundRect(x, 56, 56, W - 112, H - 112, 12); x.stroke();
+  x.strokeStyle = hexA(c1, .35); x.lineWidth = 1; roundRect(x, 64, 64, W - 128, H - 128, 10); x.stroke();
+  const cx = W / 2;
+  /* logo */
+  const logoSrc = cfg('cert_logo') || cfg('site_logo');
+  if (logoSrc) {
+    const img = new Image();
+    img.onload = () => { try { x.save(); x.beginPath(); x.arc(cx, 150, 78, 0, 7); x.closePath(); x.clip(); x.drawImage(img, cx - 78, 72, 156, 156); x.restore(); x.beginPath(); x.arc(cx, 150, 78, 0, 7); x.strokeStyle = c2; x.lineWidth = 5; x.stroke(); } catch(e) {} };
+    img.src = logoSrc;
+  } else {
+    x.fillStyle = c1; x.beginPath(); x.arc(cx, 150, 78, 0, 7); x.fill();
+    x.strokeStyle = c2; x.lineWidth = 5; x.beginPath(); x.arc(cx, 150, 78, 0, 7); x.stroke();
+    x.fillStyle = '#fff'; x.font = '800 88px "Plus Jakarta Sans",sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.fillText('E', cx, 155); x.textBaseline = 'alphabetic';
+  }
+  x.textAlign = 'center';
+  x.fillStyle = '#475569'; x.font = '600 26px "Plus Jakarta Sans",sans-serif';
+  x.fillText(clip(x, cfg('cert_org'), 1300), cx, 288);
+  x.fillStyle = c1; x.font = '800 60px Georgia, "Times New Roman", serif';
+  x.fillText(clip(x, cfg('cert_title'), 1400), cx, 368);
+  x.fillStyle = c2; x.fillRect(cx - 60, 392, 120, 5);
+  x.fillStyle = '#64748b'; x.font = 'italic 30px Georgia, serif';
+  x.fillText(cfg('cert_subtitle') || '', cx, 452);
+  /* nama */
+  x.fillStyle = '#0f172a'; x.font = 'italic 700 84px Georgia, "Times New Roman", serif';
+  const nm = clip(x, cert.name || '-', 1240);
+  x.fillText(nm, cx, 560);
+  const nw = Math.min(x.measureText(nm).width, 1240);
+  x.strokeStyle = c2; x.lineWidth = 3;
+  x.beginPath(); x.moveTo(cx - nw / 2, 585); x.lineTo(cx + nw / 2, 585); x.stroke();
+  x.fillStyle = '#475569'; x.font = '28px "Plus Jakarta Sans",sans-serif';
+  x.fillText('atas keberhasilan dan dedikasi dalam menyelesaikan seluruh rangkaian', cx, 645);
+  x.fillText('pelatihan berikut:', cx, 685);
+  x.fillStyle = '#0f172a'; x.font = '800 38px "Plus Jakarta Sans",sans-serif';
+  wrapText(x, (s ? s.title : ''), cx, 745, 1300, 46);
+  if (s) {
+    x.fillStyle = '#64748b'; x.font = '600 26px "Plus Jakarta Sans",sans-serif';
+    x.fillText(clip(x, s.fac + '   •   ' + s.sched + '   •   ' + s.dur + ' (' + s.jp + ' JP)', 1360), cx, wrapText._lastY + 46);
+  }
+  /* kode + tanggal (kiri) */
+  x.textAlign = 'left';
+  x.fillStyle = '#f0fdfa'; roundRect(x, 110, 908, 470, 118, 12); x.fill();
+  x.strokeStyle = hexA(c1, .4); x.lineWidth = 1.5; roundRect(x, 110, 908, 470, 118, 12); x.stroke();
+  x.fillStyle = '#475569'; x.font = '600 22px "Plus Jakarta Sans",sans-serif';
+  x.fillText('Kode Verifikasi', 136, 944);
+  x.fillStyle = c1; x.font = '800 30px "Courier New", monospace';
+  x.fillText(cert.code || '-', 136, 982);
+  x.fillStyle = '#94a3b8'; x.font = '600 20px "Plus Jakarta Sans",sans-serif';
+  x.fillText('Diterbitkan: ' + fmtDateID(cert.issued_at), 136, 1012);
+  /* tanda tangan (kanan) */
+  const sx = W - 420;
+  x.strokeStyle = '#334155'; x.lineWidth = 2;
+  x.beginPath(); x.moveTo(sx, 930); x.lineTo(W - 110, 930); x.stroke();
+  x.textAlign = 'center'; x.fillStyle = '#0f172a'; x.font = '800 28px "Plus Jakarta Sans",sans-serif';
+  x.fillText(clip(x, cfg('cert_signer_name'), 480), (sx + W - 110) / 2, 972);
+  x.fillStyle = '#64748b'; x.font = '600 22px "Plus Jakarta Sans",sans-serif';
+  x.fillText(clip(x, cfg('cert_signer_role'), 480), (sx + W - 110) / 2, 1004);
+  /* tempat, tanggal (kanan atas) */
+  x.textAlign = 'right'; x.fillStyle = '#64748b'; x.font = '600 24px "Plus Jakarta Sans",sans-serif';
+  const place = cfg('cert_place');
+  x.fillText((place ? place + ', ' : '') + fmtDateID(cert.issued_at), W - 110, 116);
+  /* footer */
+  x.textAlign = 'center'; x.fillStyle = '#94a3b8'; x.font = '20px "Plus Jakarta Sans",sans-serif';
+  x.fillText(clip(x, cfg('cert_footer'), 1200), cx, 1046);
+}
+function hexA(hex, a) {
+  const h = hex.replace('#', '');
+  const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
+  return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+}
+function roundRect(x, a, b, w, h, r) {
+  x.beginPath();
+  x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r);
+  x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath();
+}
+function clip(x, txt, maxW) {
+  txt = String(txt == null ? '' : txt);
+  if (x.measureText(txt).width <= maxW) return txt;
+  let t = txt;
+  while (t.length > 4 && x.measureText(t + '…').width > maxW) t = t.slice(0, -1);
+  return t + '…';
+}
+function wrapText(x, txt, cx, y, maxW, lh) {
+  const words = String(txt || '').split(' ');
+  let line = ''; const lines = [];
+  words.forEach(w => {
+    const test = line ? line + ' ' + w : w;
+    if (x.measureText(test).width > maxW && line) { lines.push(line); line = w; }
+    else line = test;
+  });
+  if (line) lines.push(line);
+  lines.forEach((l, i) => x.fillText(l, cx, y + i * lh));
+  wrapText._lastY = y + (lines.length - 1) * lh;
+  return lines;
+}
+function downloadCert(cert, s) {
+  const cv = document.createElement('canvas');
+  drawCert(cv, cert, s, 1);
+  cv.toBlob(b => {
+    if (!b) { toast('Gagal membuat berkas PNG', 'err'); return; }
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = 'Sertifikat_' + String(cert.name || 'Peserta').replace(/[^a-zA-Z0-9]+/g, '_') + '_' + (cert.code || '') + '.png';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    toast('Sertifikat terunduh 🎓', 'ok');
+  }, 'image/png');
+}
+
+/* ================= ADMIN ================= */
+function openAdmin() {
+  openModal('adminOverlay');
+  qs('#admModeBadge').textContent = SB.on ? '☁️ cloud' : '💾 demo';
+  qs('#lmCloud').style.display = SB.on ? '' : 'none';
+  qs('#alHint').innerHTML = SB.on
+    ? 'Mode Cloud aktif — masuk dengan <b>email &amp; password akun Supabase</b> Anda (Authentication → Users).'
+    : 'Mode Demo aktif — masuk dengan PIN <b>admin123</b>.';
+  if (SB.on) {
+    /* Task 11 fix: selalu verifikasi sesi Supabase yang sebenarnya */
+    showAdminLogin();
+    SB.client.auth.getSession().then(({data}) => {
+      if (data && data.session) { state.adminAuthed = true; showAdminPanel(); }
+      else {
+        state.adminAuthed = false;
+        try { sessionStorage.removeItem('edunusa_admin'); } catch(e) {}
+        showAdminLogin();
+      }
+    });
+    return;
+  }
+  if (state.adminAuthed || sessionStorage.getItem('edunusa_admin') === '1') { state.adminAuthed = true; showAdminPanel(); }
+  else showAdminLogin();
+}
+function showAdminLogin() {
+  qs('#adminLogin').style.display = '';
+  qs('#adminPanel').style.display = 'none';
+  qs('#btnAdmLogout').style.display = 'none';
+}
+function showAdminPanel() {
+  qs('#adminLogin').style.display = 'none';
+  qs('#adminPanel').style.display = '';
+  qs('#btnAdmLogout').style.display = '';
+  admTab(state.admTab || 'dash');
+}
+async function adminLogin() {
+  if (SB.on) {
+    const email = normEmail(qs('#alEmail').value), pass = qs('#alPass').value;
+    if (!validEmail(email) || !pass) { toast('Isi email & password akun Supabase', 'warn'); return; }
+    try {
+      const {error} = await SB.client.auth.signInWithPassword({email, password: pass});
+      if (error) { toast(SB.friendlyError(error), 'err'); return; }
+      state.adminAuthed = true;
+      sessionStorage.setItem('edunusa_admin', '1');
+      toast('Selamat datang, Admin! ☁️', 'ok');
+      showAdminPanel();
+    } catch(e) { toast(e.message, 'err'); }
+  } else {
+    if (qs('#alPinIn').value === CONFIG.ADMIN_PIN) {
+      state.adminAuthed = true;
+      sessionStorage.setItem('edunusa_admin', '1');
+      toast('Selamat datang, Admin!', 'ok');
+      showAdminPanel();
+    } else toast('PIN salah. Default: admin123', 'err');
+  }
+}
+async function adminLogout() {
+  state.adminAuthed = false;
+  try { sessionStorage.removeItem('edunusa_admin'); } catch(e) {}
+  if (SB.on && SB.client) { try { await SB.client.auth.signOut(); } catch(e) {} }
+  toast('Anda telah keluar.', 'ok');
+  showAdminLogin();
+}
+function admTab(k) {
+  state.admTab = k;
+  qsa('#admNav button').forEach(b => b.classList.toggle('on', b.dataset.atab === k));
+  const M = qs('#admMain');
+  if (k === 'dash') return renderDash(M);
+  if (k === 'sesi') return renderAdmSesi(M);
+  if (k === 'modul') return renderAdmModul(M);
+  if (k === 'materi') return renderAdmMateri(M);
+  if (k === 'don') return renderAdmDon(M);
+  if (k === 'testi') return renderAdmTesti(M);
+  if (k === 'cert') return renderAdmCert(M);
+  if (k === 'set') return renderAdmSet(M);
+}
+/* ---- dasbor ---- */
+function renderDash(M) {
+  const pend = state.dons.filter(d => String(d.status).toUpperCase() === 'PENDING');
+  const doneSess = state.sessions.filter(s => s.status === 'selesai');
+  M.innerHTML = '<h3>📊 Dasbor</h3><p class="sub">Ringkasan aktivitas situs Anda.</p>' +
+    '<div class="dash-grid">' +
+      '<div class="dash-card"><b>' + state.sessions.length + '</b><span>Sesi pelatihan (' + doneSess.length + ' selesai)</span></div>' +
+      '<div class="dash-card"><b>' + state.regs.length + '</b><span>Pendaftar</span></div>' +
+      '<div class="dash-card"><b>' + fmtRp(confirmedTotal()) + '</b><span>Donasi terkonfirmasi</span></div>' +
+      '<div class="dash-card"><b>' + state.certs.filter(c => !c.revoked).length + '</b><span>Sertifikat terbit</span></div>' +
+    '</div>' +
+    '<div class="form-card"><h4>' + (pend.length ? '⏳ ' + pend.length + ' donasi menunggu konfirmasi' : '✅ Semua donasi telah dikonfirmasi') + '</h4>' +
+      '<p class="hint">Buka tab ❤️ Donasi untuk mengonfirmasi. ' + (doneSess.length ? '' : 'Tandai sesi "Selesai" di tab 📚 Sesi agar sertifikat dapat diterbitkan.') + '</p></div>' +
+    '<div class="form-card"><h4>🎓 Alur sertifikat</h4>' +
+      '<ol style="font-size:13px;color:var(--ink2);margin:8px 0 0 18px">' +
+      '<li>Tandai sesi pelatihan sebagai <b>Selesai</b> (tab Sesi)</li>' +
+      '<li>Buka tab <b>Sertifikat</b> → pilih sesi → terbitkan per peserta / massal</li>' +
+      '<li>Peserta membuka situs → detail pelatihan → tab Sertifikat → masukkan email → unduh PNG / kirim via WhatsApp</li>' +
+      '</ol></div>';
+}
+/* ---- sesi ---- */
+function renderAdmSesi(M) {
+  M.innerHTML = '<h3>📚 Sesi Pelatihan</h3><p class="sub">Tambah, ubah, hapus sesi. Status "Selesai" membuka penerbitan sertifikat.</p>' +
+    '<div class="form-card" id="sesiFormWrap"></div>' +
+    '<table class="tbl"><thead><tr><th>Sesi</th><th>Jadwal</th><th>Harga</th><th>Kuota</th><th>Status</th><th style="width:170px">Aksi</th></tr></thead><tbody id="admSessRows"></tbody></table>';
+  renderSesiForm();
+  qs('#admSessRows').innerHTML = state.sessions.slice().sort((a, b) => (a.sort || 0) - (b.sort || 0)).map(s =>
+    '<tr><td><b>' + esc(s.title) + '</b><br><span class="hint">' + esc(s.cat) + ' · ' + esc(s.lev) + '</span></td>' +
+    '<td>' + esc(s.sched) + '</td><td>' + esc(s.price) + '</td><td>' + esc(s.taken) + '/' + esc(s.quota) + '</td>' +
+    '<td><span class="badge ' + (s.status === 'selesai' ? 'ok' : 'pend') + '">' + esc(s.status) + '</span></td>' +
+    '<td><div class="row-acts"><button class="btn btn-line btn-sm" data-edit="' + esc(s.id) + '">Edit</button>' +
+    '<button class="btn btn-danger btn-sm" data-del="' + esc(s.id) + '">Hapus</button></div></td></tr>').join('');
+  qsa('#admSessRows [data-edit]').forEach(b => b.onclick = () => renderSesiForm(b.dataset.edit));
+  qsa('#admSessRows [data-del]').forEach(b => b.onclick = async () => {
+    if (!confirm('Hapus sesi ini beserta relasi datanya?')) return;
+    try { await SB.remove('sessions', b.dataset.del); toast('Sesi dihapus', 'ok'); await refreshAll(); admTab('sesi'); }
+    catch(e) { toast(e.message, 'err'); }
+  });
+}
+function renderSesiForm(id) {
+  const s = id ? sessById(id) : null;
+  state.editing.sesi = id || null;
+  qs('#sesiFormWrap').innerHTML = '<h4>' + (s ? '✏️ Edit Sesi' : '➕ Tambah Sesi') + '</h4>' +
+    '<div class="f-row"><div><label class="f-lab">Judul *</label><input class="f-in" id="sesTitle" value="' + esc(s ? s.title : '') + '"></div>' +
+    '<div><label class="f-lab">Kategori</label><input class="f-in" id="sesCat" value="' + esc(s ? s.cat : '') + '" placeholder="📚 Kurikulum & Pembelajaran"></div></div>' +
+    '<div class="f-row"><div><label class="f-lab">Level</label><input class="f-in" id="sesLev" value="' + esc(s ? s.lev : 'Dasar') + '"></div>' +
+    '<div><label class="f-lab">Status</label><select class="f-in" id="sesStatus"><option value="aktif"' + (!s || s.status === 'aktif' ? ' selected' : '') + '>Aktif</option><option value="selesai"' + (s && s.status === 'selesai' ? ' selected' : '') + '>Selesai (→ sertifikat bisa diterbitkan)</option></select></div></div>' +
+    '<div class="f-row"><div><label class="f-lab">Fasilitator</label><input class="f-in" id="sesFac" value="' + esc(s ? s.fac : '') + '"></div>' +
+    '<div><label class="f-lab">Deskripsi Fasilitator</label><input class="f-in" id="sesFacT" value="' + esc(s ? s.facT : '') + '"></div></div>' +
+    '<div class="f-row"><div><label class="f-lab">Jadwal</label><input class="f-in" id="sesSched" value="' + esc(s ? s.sched : '') + '" placeholder="Selasa, 3 November 2026"></div>' +
+    '<div><label class="f-lab">Jam</label><input class="f-in" id="sesTime" value="' + esc(s ? s.time : '') + '" placeholder="09.00 WIB"></div></div>' +
+    '<div class="f-row"><div><label class="f-lab">Durasi</label><input class="f-in" id="sesDur" value="' + esc(s ? s.dur : '') + '" placeholder="3 hari"></div>' +
+    '<div><label class="f-lab">JP</label><input class="f-in" id="sesJp" type="number" value="' + esc(s ? s.jp : 8) + '"></div></div>' +
+    '<div class="f-row"><div><label class="f-lab">Mode</label><input class="f-in" id="sesMode" value="' + esc(s ? s.mode : '') + '" placeholder="Online Live via Zoom"></div>' +
+    '<div><label class="f-lab">Harga (label)</label><input class="f-in" id="sesPrice" value="' + esc(s ? s.price : 'GRATIS') + '"></div></div>' +
+    '<div class="f-row"><div><label class="f-lab">Catatan harga</label><input class="f-in" id="sesPriceNote" value="' + esc(s ? s.priceNote : '') + '"></div>' +
+    '<div><label class="f-lab">Kuota</label><input class="f-in" id="sesQuota" type="number" value="' + esc(s ? s.quota : 100) + '"></div></div>' +
+    '<label class="f-lab">Poin materi (satu per baris)</label><textarea class="f-in" id="sesMat">' + esc((s ? s.mats : []).join('\n')) + '</textarea>' +
+    '<label class="f-lab">Deskripsi</label><textarea class="f-in" id="sesDesc">' + esc(s ? s.desc : '') + '</textarea>' +
+    '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-teal" id="btnSesSave">💾 Simpan</button>' +
+    (s ? '<button class="btn btn-line" id="btnSesCancel">Batal</button>' : '') + '</div>';
+  qs('#btnSesSave').onclick = saveSesi;
+  const c = qs('#btnSesCancel'); if (c) c.onclick = () => renderSesiForm(null);
+}
+async function saveSesi() {
+  const title = qs('#sesTitle').value.trim();
+  if (!title) { toast('Judul wajib diisi', 'warn'); return; }
+  const obj = {
+    title, cat: qs('#sesCat').value.trim() || '📚 Umum', lev: qs('#sesLev').value.trim() || 'Dasar',
+    status: qs('#sesStatus').value, fac: qs('#sesFac').value.trim(), facT: qs('#sesFacT').value.trim(),
+    sched: qs('#sesSched').value.trim(), time: qs('#sesTime').value.trim(), dur: qs('#sesDur').value.trim(),
+    jp: Number(qs('#sesJp').value || 8), mode: qs('#sesMode').value.trim(), price: qs('#sesPrice').value.trim(),
+    priceNote: qs('#sesPriceNote').value.trim(), quota: Number(qs('#sesQuota').value || 0),
+    mats: qs('#sesMat').value.split('\n').map(x => x.trim()).filter(Boolean), desc: qs('#sesDesc').value.trim()
+  };
+  try {
+    if (state.editing.sesi) await SB.update('sessions', state.editing.sesi, obj);
+    else await SB.insert('sessions', Object.assign({id: 's' + Date.now().toString(36), taken: 0, sort: state.sessions.length + 1, media: [], freeAccess: false}, obj));
+    toast('Sesi tersimpan', 'ok');
+    await refreshAll(); admTab('sesi');
+  } catch(e) { toast(e.message, 'err'); }
+}
+/* ---- modul ---- */
+function renderAdmModul(M) {
+  M.innerHTML = '<h3>🧩 Modul &amp; Harga</h3><p class="sub">Harga jasa pengembangan per modul.</p>' +
+    '<div class="form-card" id="modFormWrap"></div>' +
+    '<table class="tbl"><thead><tr><th>Modul</th><th>Harga</th><th style="width:150px">Aksi</th></tr></thead><tbody id="admModRows"></tbody></table>';
+  renderModForm();
+  qs('#admModRows').innerHTML = state.modules.slice().sort((a, b) => (a.sort || 0) - (b.sort || 0)).map(m =>
+    '<tr><td><b>' + esc(m.title) + '</b><br><span class="hint">' + esc(m.desc) + '</span></td><td>' + fmtRp(m.price) + '</td>' +
+    '<td><div class="row-acts"><button class="btn btn-line btn-sm" data-edit="' + esc(m.id) + '">Edit</button>' +
+    '<button class="btn btn-danger btn-sm" data-del="' + esc(m.id) + '">Hapus</button></div></td></tr>').join('');
+  qsa('#admModRows [data-edit]').forEach(b => b.onclick = () => renderModForm(b.dataset.edit));
+  qsa('#admModRows [data-del]').forEach(b => b.onclick = async () => {
+    if (!confirm('Hapus modul ini?')) return;
+    try { await SB.remove('modules', b.dataset.del); toast('Modul dihapus', 'ok'); await refreshAll(); admTab('modul'); }
+    catch(e) { toast(e.message, 'err'); }
+  });
+}
+function renderModForm(id) {
+  const m = id ? modById(id) : null;
+  state.editing.modul = id || null;
+  qs('#modFormWrap').innerHTML = '<h4>' + (m ? '✏️ Edit Modul' : '➕ Tambah Modul') + '</h4>' +
+    '<div class="f-row"><div><label class="f-lab">Nama modul *</label><input class="f-in" id="mTitle" value="' + esc(m ? m.title : '') + '"></div>' +
+    '<div><label class="f-lab">Harga (Rp) *</label><input class="f-in" id="mPrice" type="number" value="' + esc(m ? m.price : '') + '"></div></div>' +
+    '<label class="f-lab">Deskripsi</label><textarea class="f-in" id="mDesc">' + esc(m ? m.desc : '') + '</textarea>' +
+    '<div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-teal" id="btnModSave">💾 Simpan</button>' +
+    (m ? '<button class="btn btn-line" id="btnModCancel">Batal</button>' : '') + '</div>';
+  qs('#btnModSave').onclick = saveModul;
+  const c = qs('#btnModCancel'); if (c) c.onclick = () => renderModForm(null);
+}
+async function saveModul() {
+  const title = qs('#mTitle').value.trim(), price = Number(qs('#mPrice').value || 0);
+  if (!title || !price) { toast('Nama & harga wajib diisi', 'warn'); return; }
+  const obj = {title, price, desc: qs('#mDesc').value.trim()};
+  try {
+    if (state.editing.modul) await SB.update('modules', state.editing.modul, obj);
+    else await SB.insert('modules', Object.assign({id: 'm' + Date.now().toString(36), sort: state.modules.length + 1}, obj));
+    toast('Modul tersimpan', 'ok');
+    await refreshAll(); admTab('modul');
+  } catch(e) { toast(e.message, 'err'); }
+}
+/* ---- materi ---- */
+function renderAdmMateri(M) {
+  if (!state.sessions.length) { M.innerHTML = '<h3>🎬 Materi</h3><p class="sub">Belum ada sesi.</p>'; return; }
+  if (!M.dataset.sess) M.dataset.sess = state.sessions[0].id;
+  const sid = M.dataset.sess;
+  const s = sessById(sid) || state.sessions[0];
+  M.innerHTML = '<h3>🎬 Materi Pelatihan</h3><p class="sub">Kelola media (video/audio/tautan) & akses donasi per sesi.</p>' +
+    '<div class="form-card"><label class="f-lab">Pilih sesi</label><select class="f-in" id="matSessSel">' +
+      state.sessions.map(x => '<option value="' + esc(x.id) + '"' + (x.id === s.id ? ' selected' : '') + '>' + esc(x.title) + '</option>').join('') + '</select>' +
+    '<label style="display:flex;gap:8px;align-items:center;margin-top:12px;font-size:13.5px;font-weight:700"><input type="checkbox" id="matFree"' + (s.freeAccess ? ' checked' : '') + ' style="width:18px;height:18px;accent-color:var(--teal)"> 🔓 Akses terbuka untuk semua (tanpa donasi)</label>' +
+    '<button class="btn btn-teal btn-sm" id="btnMatFreeSave" style="margin-top:10px">💾 Simpan Akses</button></div>' +
+    '<div id="admMediaList"></div>' +
+    '<div class="form-card" id="mediaFormWrap"></div>';
+  qs('#matSessSel').onchange = () => { M.dataset.sess = qs('#matSessSel').value; renderAdmMateri(M); };
+  qs('#btnMatFreeSave').onclick = async () => {
+    try {
+      await SB.update('sessions', s.id, {freeAccess: qs('#matFree').checked});
+      toast('Pengaturan akses disimpan', 'ok'); await refreshAll(); admTab('materi');
+    } catch(e) { toast(e.message, 'err'); }
+  };
+  renderMediaList(s); renderMediaForm(s, null);
+}
+function renderMediaList(s) {
+  const box = qs('#admMediaList');
+  const items = s.media || [];
+  box.innerHTML = '<table class="tbl"><thead><tr><th>Media</th><th>Tipe</th><th>Akses</th><th style="width:150px">Aksi</th></tr></thead><tbody>' +
+    (items.length ? items.map(m =>
+      '<tr><td><b>' + esc(m.title) + '</b></td><td>' + (m.type === 'video' ? '🎥 Video' : m.type === 'audio' ? '🎧 Audio' : '🔗 Tautan') + '</td>' +
+      '<td>' + (m.locked ? '<span class="badge pend">Donatur</span>' : '<span class="badge ok">Terbuka</span>') + '</td>' +
+      '<td><div class="row-acts"><button class="btn btn-line btn-sm" data-edit="' + esc(m.id) + '">Edit</button>' +
+      '<button class="btn btn-danger btn-sm" data-del="' + esc(m.id) + '">Hapus</button></div></td></tr>').join('')
+    : '<tr><td colspan="4" class="hint">Belum ada media pada sesi ini.</td></tr>') + '</tbody></table>';
+  qsa('#admMediaList [data-edit]').forEach(b => b.onclick = () => renderMediaForm(s, b.dataset.edit));
+  qsa('#admMediaList [data-del]').forEach(b => b.onclick = async () => {
+    if (!confirm('Hapus media ini?')) return;
+    const media = (s.media || []).filter(x => x.id !== b.dataset.del);
+    try { await SB.update('sessions', s.id, {media}); toast('Media dihapus', 'ok'); await refreshAll(); admTab('materi'); }
+    catch(e) { toast(e.message, 'err'); }
+  });
+}
+function renderMediaForm(s, mid) {
+  const m = mid ? (s.media || []).find(x => x.id === mid) : null;
+  state.editing.media = mid || null;
+  state.editing.sesiMedia = s.id;
+  qs('#mediaFormWrap').innerHTML = '<h4>' + (m ? '✏️ Edit Media' : '➕ Tambah Media') + '</h4>' +
+    '<div class="f-row"><div><label class="f-lab">Judul *</label><input class="f-in" id="medTitle" value="' + esc(m ? m.title : '') + '"></div>' +
+    '<div><label class="f-lab">Tipe</label><select class="f-in" id="medType"><option value="video"' + (m && m.type === 'video' ? ' selected' : '') + '>🎥 Video</option><option value="audio"' + (m && m.type === 'audio' ? ' selected' : '') + '>🎧 Audio</option><option value="link"' + (m && m.type === 'link' ? ' selected' : '') + '>🔗 Tautan</option></select></div></div>' +
+    '<label class="f-lab">URL (mp4 / mp3 / tautan)</label><input class="f-in" id="medUrl" value="' + esc(m ? m.url : '') + '" placeholder="https://…">' +
+    '<label style="display:flex;gap:8px;align-items:center;margin-top:12px;font-size:13.5px;font-weight:700"><input type="checkbox" id="medLocked"' + (!m || m.locked ? ' checked' : '') + ' style="width:18px;height:18px;accent-color:var(--amber)"> 🔒 Hanya untuk donatur terkonfirmasi</label>' +
+    '<div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-teal" id="btnMedSave">💾 Simpan Media</button>' +
+    (m ? '<button class="btn btn-line" id="btnMedCancel">Batal</button>' : '') + '</div>';
+  qs('#btnMedSave').onclick = async () => {
+    const title = qs('#medTitle').value.trim(), url = qs('#medUrl').value.trim();
+    if (!title || !url) { toast('Judul & URL wajib diisi', 'warn'); return; }
+    const media = JSON.parse(JSON.stringify(s.media || []));
+    const obj = {id: m ? m.id : 'md' + Date.now().toString(36), title, type: qs('#medType').value, url, locked: qs('#medLocked').checked};
+    if (m) { const i = media.findIndex(x => x.id === m.id); media[i] = obj; } else media.push(obj);
+    try { await SB.update('sessions', s.id, {media}); toast('Media tersimpan', 'ok'); await refreshAll(); admTab('materi'); }
+    catch(e) { toast(e.message, 'err'); }
+  };
+  const c = qs('#btnMedCancel'); if (c) c.onclick = () => renderMediaForm(s, null);
+}
+/* ---- donasi ---- */
+function renderAdmDon(M) {
+  const sorted = state.dons.slice().sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
+  M.innerHTML = '<h3>❤️ Donasi</h3><p class="sub">Konfirmasi donasi setelah transfer diterima (PENDING → CONFIRMED). Donasi terkonfirmasi membuka materi & masuk leaderboard.</p>' +
+    '<table class="tbl"><thead><tr><th>Donatur</th><th>Sesi</th><th>Nominal</th><th>Metode</th><th>Status</th><th style="width:190px">Aksi</th></tr></thead><tbody id="admDonRows"></tbody></table>';
+  qs('#admDonRows').innerHTML = sorted.map(d => {
+    const s = sessById(d.session_id);
+    const st = String(d.status).toUpperCase();
+    return '<tr><td><b>' + esc(d.donor_name) + '</b><br><span class="hint">' + esc(d.email) + ' · ' + fmtDateID(d.created_at) + (d.message ? '<br>"' + esc(d.message) + '"' : '') + '</span></td>' +
+      '<td>' + esc(s ? s.title : 'Umum') + '</td><td><b>' + fmtRp(d.amount) + '</b></td><td>' + esc(d.method || '—') + '</td>' +
+      '<td><span class="badge ' + (st === 'CONFIRMED' ? 'ok' : 'pend') + '">' + st + '</span></td>' +
+      '<td><div class="row-acts">' +
+        (st !== 'CONFIRMED' ? '<button class="btn btn-teal btn-sm" data-cf="' + esc(d.id) + '">✔ Konfirmasi</button>' : '') +
+        '<button class="btn btn-danger btn-sm" data-del="' + esc(d.id) + '">Hapus</button></div></td></tr>';
+  }).join('') || '<tr><td colspan="6" class="hint">Belum ada donasi.</td></tr>';
+  qsa('#admDonRows [data-cf]').forEach(b => b.onclick = async () => {
+    try { await SB.update('dons', b.dataset.cf, {status: 'CONFIRMED'}); toast('Donasi dikonfirmasi ✅', 'ok'); await refreshAll(); admTab('don'); }
+    catch(e) { toast(e.message, 'err'); }
+  });
+  qsa('#admDonRows [data-del]').forEach(b => b.onclick = async () => {
+    if (!confirm('Hapus catatan donasi ini?')) return;
+    try { await SB.remove('dons', b.dataset.del); toast('Donasi dihapus', 'ok'); await refreshAll(); admTab('don'); }
+    catch(e) { toast(e.message, 'err'); }
+  });
+}
+/* ---- testimoni ---- */
+function renderAdmTesti(M) {
+  M.innerHTML = '<h3>💬 Testimoni</h3><p class="sub">Sembunyikan atau hapus testimoni yang masuk.</p>' +
+    '<table class="tbl"><thead><tr><th>Testimoni</th><th>Rating</th><th>Status</th><th style="width:190px">Aksi</th></tr></thead><tbody id="admTestiRows"></tbody></table>';
+  qs('#admTestiRows').innerHTML = state.testis.map(t =>
+    '<tr><td><b>' + esc(t.name) + '</b> <span class="hint">(' + esc(t.role || '') + ' · ' + esc(t.org || '') + ')</span><br><span style="font-size:12.5px">' + esc(t.content) + '</span></td>' +
+    '<td>' + '★'.repeat(Number(t.rating || 5)) + '</td>' +
+    '<td><span class="badge ' + (t.approved !== false ? 'ok' : 'off') + '">' + (t.approved !== false ? 'Tampil' : 'Disembunyikan') + '</span></td>' +
+    '<td><div class="row-acts">' +
+      '<button class="btn btn-line btn-sm" data-tg="' + esc(t.id) + '">' + (t.approved !== false ? '🙈 Sembunyikan' : '👁 Tampilkan') + '</button>' +
+      '<button class="btn btn-danger btn-sm" data-del="' + esc(t.id) + '">Hapus</button></div></td></tr>').join('');
+  qsa('#admTestiRows [data-tg]').forEach(b => b.onclick = async () => {
+    const t = state.testis.find(x => x.id === b.dataset.tg);
+    try { await SB.update('testis', b.dataset.tg, {approved: !(t.approved !== false)}); toast('Status testimoni diubah', 'ok'); await refreshAll(); admTab('testi'); }
+    catch(e) { toast(e.message, 'err'); }
+  });
+  qsa('#admTestiRows [data-del]').forEach(b => b.onclick = async () => {
+    if (!confirm('Hapus testimoni ini?')) return;
+    try { await SB.remove('testis', b.dataset.del); toast('Testimoni dihapus', 'ok'); await refreshAll(); admTab('testi'); }
+    catch(e) { toast(e.message, 'err'); }
+  });
+}
+
+/* ---- SERTIFIKAT (admin) ---- */
+function renderAdmCert(M) {
+  M.innerHTML = '<h3>🎓 Sertifikat</h3><p class="sub">Atur desain, terbitkan sertifikat untuk peserta yang selesai, dan kirim otomatis via WhatsApp.</p>' +
+    /* desain */
+    '<div class="form-card"><h4>🎨 Desain Sertifikat</h4>' +
+      '<div class="cert-design-grid">' +
+        '<div><label class="f-lab">Judul sertifikat</label><input class="f-in" id="cTitle" value="' + esc(cfg('cert_title')) + '"></div>' +
+        '<div><label class="f-lab">Sub-judul (sapaan)</label><input class="f-in" id="cSub" value="' + esc(cfg('cert_subtitle')) + '"></div>' +
+        '<div><label class="f-lab">Nama lembaga (atas)</label><input class="f-in" id="cOrg" value="' + esc(cfg('cert_org')) + '"></div>' +
+        '<div><label class="f-lab">Kota terbit</label><input class="f-in" id="cPlace" value="' + esc(cfg('cert_place')) + '"></div>' +
+        '<div><label class="f-lab">Warna utama</label><input type="color" class="f-in color-in" id="cC1" value="' + esc(cfg('cert_color1')) + '"></div>' +
+        '<div><label class="f-lab">Warna aksen</label><input type="color" class="f-in color-in" id="cC2" value="' + esc(cfg('cert_color2')) + '"></div>' +
+        '<div><label class="f-lab">Nama penanda tangan</label><input class="f-in" id="cSigner" value="' + esc(cfg('cert_signer_name')) + '"></div>' +
+        '<div><label class="f-lab">Jabatan penanda tangan</label><input class="f-in" id="cRole" value="' + esc(cfg('cert_signer_role')) + '"></div>' +
+      '</div>' +
+      '<label class="f-lab">Teks footer sertifikat</label><input class="f-in" id="cFooter" value="' + esc(cfg('cert_footer')) + '">' +
+      '<label class="f-lab">Logo sertifikat (khusus sertifikat — kosongkan untuk memakai logo situs)</label>' +
+      '<div style="display:flex;gap:12px;align-items:center;margin-top:4px">' +
+        (cfg('cert_logo') ? '<img class="logo-prev" src="' + esc(cfg('cert_logo')) + '">' : '<div class="logo-empty">tanpa logo</div>') +
+        '<input type="file" id="cLogo" accept="image/*" style="font-size:12.5px">' +
+        (cfg('cert_logo') ? '<button class="btn btn-danger btn-sm" id="btnCertLogoDel">Hapus</button>' : '') +
+      '</div>' +
+      '<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">' +
+        '<button class="btn btn-line" id="btnCertPreview">👁 Pratinjau</button>' +
+        '<button class="btn btn-teal" id="btnCertDesignSave">💾 Simpan Desain</button>' +
+      '</div>' +
+      '<div id="certDesignPrev" style="margin-top:14px"></div>' +
+    '</div>' +
+    /* penerbitan */
+    '<div class="form-card"><h4>🏅 Terbitkan Sertifikat</h4>' +
+      '<label class="f-lab">Pilih sesi pelatihan</label>' +
+      '<select class="f-in" id="certSessSel">' + state.sessions.map(s =>
+        '<option value="' + esc(s.id) + '">' + esc(s.title) + (s.status === 'selesai' ? ' — ✓ selesai' : '') + '</option>').join('') + '</select>' +
+      '<div id="certIssueBox" style="margin-top:14px"></div>' +
+      '<div style="border-top:2px dashed var(--line);margin:14px 0;padding-top:12px">' +
+        '<h4 style="font-size:13.5px">➕ Terbitkan manual (tanpa pendaftaran)</h4>' +
+        '<div class="f-row"><div><label class="f-lab">Nama peserta</label><input class="f-in" id="mcName"></div>' +
+        '<div><label class="f-lab">Email</label><input class="f-in" id="mcEmail"></div></div>' +
+        '<div class="f-row"><div><label class="f-lab">No. WA (untuk kirim otomatis, opsional)</label><input class="f-in" id="mcPhone" placeholder="08…"></div>' +
+        '<div style="display:flex;align-items:flex-end"><button class="btn btn-teal" id="btnManualCert" style="width:100%">🎓 Terbitkan</button></div></div>' +
+      '</div>' +
+    '</div>' +
+    /* daftar */
+    '<div class="form-card"><h4>📋 Sertifikat Terbit (' + state.certs.filter(c => !c.revoked).length + ')</h4>' +
+      '<table class="tbl"><thead><tr><th>Kode</th><th>Peserta</th><th>Sesi</th><th>Diterbitkan</th><th style="width:190px">Aksi</th></tr></thead><tbody id="admCertRows"></tbody></table>' +
+    '</div>';
+  bindCertDesign();
+  qs('#certSessSel').onchange = () => renderCertIssue();
+  renderCertIssue();
+  renderAdmCertList();
+  qs('#btnManualCert').onclick = () => {
+    issueCert(qs('#certSessSel').value, qs('#mcName').value.trim(), qs('#mcEmail').value.trim(), qs('#mcPhone').value.trim())
+      .then(() => { qs('#mcName').value = ''; qs('#mcEmail').value = ''; qs('#mcPhone').value = ''; });
+  };
+}
+function bindCertDesign() {
+  const pv = () => {
+    /* simpan sementara ke state.cfg agar pratinjau memakai nilai terbaru tanpa menyimpan */
+    state.cfg.cert_title = qs('#cTitle').value;
+    state.cfg.cert_subtitle = qs('#cSub').value;
+    state.cfg.cert_org = qs('#cOrg').value;
+    state.cfg.cert_place = qs('#cPlace').value;
+    state.cfg.cert_color1 = qs('#cC1').value;
+    state.cfg.cert_color2 = qs('#cC2').value;
+    state.cfg.cert_signer_name = qs('#cSigner').value;
+    state.cfg.cert_signer_role = qs('#cRole').value;
+    state.cfg.cert_footer = qs('#cFooter').value;
+    const s = state.sessions[0];
+    const dummy = {name: 'Nama Peserta Contoh', code: certCodeFor(s ? s.id : 'S1'), issued_at: new Date().toISOString(), email: 'contoh@mail.com'};
+    qs('#certDesignPrev').innerHTML = '<div class="cert-view"><canvas id="certPrevCanvas" width="672" height="475"></canvas></div>';
+    drawCert(qs('#certPrevCanvas'), dummy, s, 0.42);
+  };
+  qs('#btnCertPreview').onclick = pv;
+  qs('#btnCertDesignSave').onclick = async () => {
+    const ok = await SB.saveConfig({
+      cert_title: qs('#cTitle').value, cert_subtitle: qs('#cSub').value, cert_org: qs('#cOrg').value,
+      cert_place: qs('#cPlace').value, cert_color1: qs('#cC1').value, cert_color2: qs('#cC2').value,
+      cert_signer_name: qs('#cSigner').value, cert_signer_role: qs('#cRole').value, cert_footer: qs('#cFooter').value
+    });
+    if (ok) { state.cfg = await SB.getConfig(); renderBrand(); toast('Desain sertifikat tersimpan 🎨', 'ok'); }
+  };
+  const lf = qs('#cLogo');
+  if (lf) lf.onchange = () => {
+    const f = lf.files[0]; if (!f) return;
+    fileToDataURL(f, 300, async dataUrl => {
+      const ok = await SB.saveConfig({cert_logo: dataUrl});
+      if (ok) { toast('Logo sertifikat diperbarui 🎓', 'ok'); await refreshAll(); admTab('cert'); }
+    });
+  };
+  const dl = qs('#btnCertLogoDel');
+  if (dl) dl.onclick = async () => {
+    const ok = await SB.saveConfig({cert_logo: ''});
+    if (ok) { toast('Logo sertifikat dihapus', 'ok'); await refreshAll(); admTab('cert'); }
+  };
+}
+function renderCertIssue() {
+  const sid = qs('#certSessSel').value;
+  const s = sessById(sid);
+  const regs = regsOf(sid);
+  const certs = certsOf(sid);
+  const box = qs('#certIssueBox');
+  const done = s && s.status === 'selesai';
+  box.innerHTML =
+    (done ? '<div class="open-box" style="margin-bottom:12px">✓ Sesi ini berstatus <b>Selesai</b> — siap menerbitkan sertifikat.</div>'
+          : '<div class="lock-box" style="text-align:left;margin-bottom:12px"><b>⚠️ Sesi belum "Selesai"</b><br><span style="font-size:12.5px">Tandai status sesi menjadi <b>Selesai</b> pada tab 📚 Sesi agar konsisten dengan syarat kelulusan. (Anda tetap dapat menerbitkan sekarang jika ingin.)</span></div>') +
+    '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">' +
+      '<b style="font-size:13.5px">Daftar pendaftar (' + regs.length + ')</b>' +
+      '<button class="btn btn-teal btn-sm" id="btnBulkCert">⚡ Terbitkan Semua yang Belum Punya</button>' +
+    '</div>' +
+    '<table class="tbl"><thead><tr><th>Peserta</th><th>Email</th><th>Sertifikat</th><th style="width:210px">Aksi</th></tr></thead><tbody>' +
+    (regs.length ? regs.map(r => {
+      const c = certs.find(x => normEmail(x.email) === normEmail(r.email));
+      return '<tr><td><b>' + esc(r.name) + '</b></td><td>' + esc(r.email) + '</td>' +
+        '<td>' + (c ? '<span class="badge ok">' + esc(c.code) + '</span>' : '<span class="badge off">belum</span>') + '</td>' +
+        '<td><div class="row-acts">' + (c
+          ? '<button class="btn btn-line btn-sm" data-wa="' + esc(c.id) + '">💬 WA</button><button class="btn btn-line btn-sm" data-dl="' + esc(c.id) + '">⬇️ PNG</button>'
+          : '<button class="btn btn-teal btn-sm" data-issue="' + esc(r.id) + '">🎓 Terbitkan</button>') + '</div></td></tr>';
+    }).join('') : '<tr><td colspan="4" class="hint">Belum ada pendaftar pada sesi ini. Gunakan penerbitan manual di bawah.</td></tr>') +
+    '</tbody></table>';
+  qs('#btnBulkCert').onclick = bulkIssue;
+  qsa('#certIssueBox [data-issue]').forEach(b => b.onclick = () => {
+    const r = regsOf(sid).find(x => x.id === b.dataset.issue);
+    issueCert(sid, r.name, r.email, r.phone || '');
+  });
+  qsa('#certIssueBox [data-wa]').forEach(b => b.onclick = () => {
+    const c = state.certs.find(x => x.id === b.dataset.wa);
+    const r = regsOf(sid).find(x => normEmail(x.email) === normEmail(c.email));
+    const ph = (r && r.phone) || prompt('Nomor WhatsApp peserta (cth. 08…):', '');
+    if (!ph) return;
+    window.open(waLink(ph, certWaMsg(c, sessById(sid), c.email)), '_blank');
+  });
+  qsa('#certIssueBox [data-dl]').forEach(b => b.onclick = () => {
+    const c = state.certs.find(x => x.id === b.dataset.dl);
+    downloadCert(c, sessById(sid));
+  });
+}
+function renderAdmCertList() {
+  const rows = state.certs.filter(c => !c.revoked).sort((a, b) => String(b.issued_at).localeCompare(String(a.issued_at)));
+  qs('#admCertRows').innerHTML = rows.map(c => {
+    const s = sessById(c.session_id);
+    return '<tr><td><b style="font-family:monospace">' + esc(c.code) + '</b></td>' +
+      '<td><b>' + esc(c.name) + '</b><br><span class="hint">' + esc(c.email) + '</span></td>' +
+      '<td>' + esc(s ? s.title : '—') + '</td><td>' + fmtDateID(c.issued_at) + '</td>' +
+      '<td><div class="row-acts">' +
+        '<button class="btn btn-line btn-sm" data-dl="' + esc(c.id) + '">⬇️ PNG</button>' +
+        '<button class="btn btn-line btn-sm" data-wa="' + esc(c.id) + '">💬 WA</button>' +
+        '<button class="btn btn-danger btn-sm" data-del="' + esc(c.id) + '">Cabut</button>' +
+      '</div></td></tr>';
+  }).join('') || '<tr><td colspan="5" class="hint">Belum ada sertifikat terbit.</td></tr>';
+  qsa('#admCertRows [data-dl]').forEach(b => b.onclick = () => {
+    const c = state.certs.find(x => x.id === b.dataset.dl);
+    downloadCert(c, sessById(c.session_id));
+  });
+  qsa('#admCertRows [data-wa]').forEach(b => b.onclick = () => {
+    const c = state.certs.find(x => x.id === b.dataset.wa);
+    const r = regsOf(c.session_id).find(x => normEmail(x.email) === normEmail(c.email));
+    const ph = (r && r.phone) || c.phone || prompt('Nomor WhatsApp peserta (cth. 08…):', '');
+    if (!ph) return;
+    window.open(waLink(ph, certWaMsg(c, sessById(c.session_id), c.email)), '_blank');
+  });
+  qsa('#admCertRows [data-del]').forEach(b => b.onclick = async () => {
+    const c = state.certs.find(x => x.id === b.dataset.del);
+    if (!confirm('Cabut & hapus sertifikat ' + c.code + ' a.n. ' + c.name + '?')) return;
+    try { await SB.remove('certs', c.id); toast('Sertifikat dicabut', 'ok'); await refreshAll(); admTab('cert'); }
+    catch(e) { toast(e.message, 'err'); }
+  });
+}
+async function issueCert(sid, name, email, phone) {
+  const s = sessById(sid);
+  if (!s) { toast('Pilih sesi terlebih dulu', 'warn'); return; }
+  if (!name || !validEmail(email)) { toast('Nama & email peserta wajib valid', 'warn'); return; }
+  const dup = state.certs.find(c => c.session_id === sid && normEmail(c.email) === normEmail(email) && !c.revoked);
+  if (dup) { toast('Peserta ini sudah memiliki sertifikat: ' + dup.code, 'warn'); return; }
+  let code = certCodeFor(sid);
+  while (state.certs.some(c => c.code === code)) code = certCodeFor(sid);
+  try {
+    const cert = await SB.insert('certs', {code, session_id: sid, name, email: normEmail(email), phone: phone || '', issued_at: new Date().toISOString(), revoked: false});
+    state.certs.push(cert);
+    toast('🎓 Sertifikat diterbitkan: ' + code, 'ok');
+    if (phone && confirm('Sertifikat diterbitkan.\nBuka WhatsApp untuk mengirimkan link pengunduhan ke ' + phone + '?')) {
+      window.open(waLink(phone, certWaMsg(cert, s, email)), '_blank');
+    }
+    await refreshAll();
+    admTab('cert');
+    return cert;
+  } catch(e) { toast(e.message, 'err'); return null; }
+}
+async function bulkIssue() {
+  const sid = qs('#certSessSel').value;
+  const regs = regsOf(sid);
+  if (!regs.length) { toast('Tidak ada pendaftar pada sesi ini', 'warn'); return; }
+  let n = 0;
+  for (const r of regs) {
+    const has = state.certs.find(c => c.session_id === sid && normEmail(c.email) === normEmail(r.email) && !c.revoked);
+    if (has) continue;
+    let code = certCodeFor(sid);
+    while (state.certs.some(c => c.code === code)) code = certCodeFor(sid);
+    try {
+      const cert = await SB.insert('certs', {code, session_id: sid, name: r.name, email: normEmail(r.email), phone: r.phone || '', issued_at: new Date().toISOString(), revoked: false});
+      state.certs.push(cert); n++;
+    } catch(e) { toast(r.name + ': ' + e.message, 'err'); }
+  }
+  toast(n ? '🎓 ' + n + ' sertifikat diterbitkan sekaligus!' : 'Semua peserta sudah memiliki sertifikat.', n ? 'ok' : 'warn');
+  if (n) {
+    const withPhone = regs.filter(r => r.phone);
+    if (withPhone.length && confirm('Kirim notifikasi WhatsApp ke ' + withPhone.length + ' peserta yang punya nomor WA?\n(OK = kirim satu per satu; Cancel = lewati)')) {
+      withPhone.forEach(r => {
+        const c = state.certs.find(x => x.session_id === sid && normEmail(x.email) === normEmail(r.email));
+        if (c) window.open(waLink(r.phone, certWaMsg(c, sessById(sid), r.email)), '_blank');
+      });
+    }
+  }
+  await refreshAll();
+  admTab('cert');
+}
+
+/* ---- PENGATURAN (admin) ---- */
+function fileToDataURL(file, max, cb) {
+  const r = new FileReader();
+  r.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const sc = Math.min(1, max / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(img.width * sc));
+      c.height = Math.max(1, Math.round(img.height * sc));
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      cb(c.toDataURL('image/png'));
+    };
+    img.onerror = () => toast('Berkas gambar tidak dapat dibaca', 'err');
+    img.src = e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+function renderAdmSet(M) {
+  const saved = (() => { try { return JSON.parse(localStorage.getItem('edunusa_sb_cfg') || 'null'); } catch(e) { return null; } })();
+  M.innerHTML = '<h3>⚙️ Pengaturan Situs</h3><p class="sub">Kontak, identitas, logo, dan koneksi Supabase.</p>' +
+    /* kontak & bank */
+    '<div class="form-card"><h4>📞 Kontak &amp; Donasi</h4>' +
+      '<div class="f-row"><div><label class="f-lab">Nomor WhatsApp situs (62…)</label><input class="f-in" id="setWa" value="' + esc(cfg('wa_number')) + '"></div>' +
+      '<div><label class="f-lab">Email kontak</label><input class="f-in" id="setEmail" value="' + esc(cfg('contact_email')) + '"></div></div>' +
+      '<label class="f-lab">Info rekening donasi (satu per baris)</label><textarea class="f-in" id="setBank">' + esc(cfg('bank_info')) + '</textarea>' +
+      '<button class="btn btn-teal" id="btnSiteSave" style="margin-top:12px">💾 Simpan Kontak</button></div>' +
+    /* logo situs */
+    '<div class="form-card"><h4>🖼️ Logo Situs</h4><p class="hint">Tampil di header, footer, dan favicon. Format PNG transparan disarankan (otomatis diperkecil ke 220px).</p>' +
+      '<div style="display:flex;gap:12px;align-items:center;margin-top:10px">' +
+        (cfg('site_logo') ? '<img class="logo-prev" src="' + esc(cfg('site_logo')) + '">' : '<div class="logo-empty">logo default</div>') +
+        '<input type="file" id="setLogo" accept="image/*" style="font-size:12.5px">' +
+        (cfg('site_logo') ? '<button class="btn btn-danger btn-sm" id="btnLogoDel">Kembalikan ke default</button>' : '') +
+      '</div></div>' +
+    /* supabase */
+    '<div class="form-card"><h4>☁️ Koneksi Supabase</h4>' +
+      '<p class="hint">Status: <b>' + (SB.on ? '☁️ tersambung' : '💾 mode demo') + (SB.reason ? ' — ' + esc(SB.reason) : '') + '</b></p>' +
+      '<label class="f-lab">Project URL</label><input class="f-in" id="setSbUrl" value="' + esc((saved && saved.url) || CONFIG.SB_URL) + '">' +
+      '<label class="f-lab">Anon Key (public — aman untuk frontend dengan RLS)</label><input class="f-in" id="setSbKey" type="password" placeholder="tempel ANON KEY Anda di sini" value="' + esc((saved && saved.key) || CONFIG.SB_KEY || '') + '">' +
+      '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">' +
+        '<button class="btn btn-teal" id="btnSbSave">💾 Simpan &amp; Muat Ulang</button>' +
+        '<button class="btn btn-line" id="btnSbOff">' + (localStorage.getItem('edunusa_sb_off') === '1' ? '▶️ Aktifkan Cloud' : '⏸️ Paksa Mode Demo') + '</button>' +
+      '</div>' +
+      '<p class="hint" style="margin-top:8px">Jalankan <b>edunusa-supabase.sql v2.0</b> di Supabase SQL Editor terlebih dulu. Anon Key ada di Supabase → Project Settings → API.</p></div>';
+  qs('#btnSiteSave').onclick = async () => {
+    const ok = await SB.saveConfig({
+      wa_number: qs('#setWa').value.trim() || DEFAULT_CFG.wa_number,
+      contact_email: qs('#setEmail').value.trim() || DEFAULT_CFG.contact_email,
+      bank_info: qs('#setBank').value
+    });
+    if (ok) { state.cfg = await SB.getConfig(); renderAll(); toast('Kontak tersimpan', 'ok'); }
+  };
+  const lg = qs('#setLogo');
+  if (lg) lg.onchange = () => {
+    const f = lg.files[0]; if (!f) return;
+    fileToDataURL(f, 220, async dataUrl => {
+      const ok = await SB.saveConfig({site_logo: dataUrl});
+      if (ok) { toast('Logo situs diperbarui 🖼️', 'ok'); await refreshAll(); admTab('set'); }
+    });
+  };
+  const ld = qs('#btnLogoDel');
+  if (ld) ld.onclick = async () => {
+    const ok = await SB.saveConfig({site_logo: ''});
+    if (ok) { toast('Logo dikembalikan ke default', 'ok'); await refreshAll(); admTab('set'); }
+  };
+  qs('#btnSbSave').onclick = () => {
+    localStorage.setItem('edunusa_sb_cfg', JSON.stringify({url: qs('#setSbUrl').value.trim(), key: qs('#setSbKey').value.trim()}));
+    localStorage.removeItem('edunusa_sb_off');
+    location.reload();
+  };
+  qs('#btnSbOff').onclick = () => {
+    if (localStorage.getItem('edunusa_sb_off') === '1') localStorage.removeItem('edunusa_sb_off');
+    else localStorage.setItem('edunusa_sb_off', '1');
+    location.reload();
+  };
+}
+
+/* ---------------- events & init ---------------- */
+function wire() {
+  qs('#smClose').addEventListener('click', () => closeModal('sessionModal'));
+  qs('#sessionModal').addEventListener('click', e => { if (e.target === qs('#sessionModal')) closeModal('sessionModal'); });
+  qsa('#smTabs button').forEach(b => b.addEventListener('click', () => smTab(b.dataset.tab)));
+  qs('#regForm').addEventListener('submit', submitReg);
+  qs('#btnDon').addEventListener('click', submitDon);
+  qs('#btnTesti').addEventListener('click', submitTesti);
+  qs('#btnAddTesti').addEventListener('click', () => openModal('testiModal'));
+  qs('#btnReq').addEventListener('click', submitReq);
+  qs('#btnCertClaim').addEventListener('click', certClaim);
+  qs('#certEmail').addEventListener('keydown', e => { if (e.key === 'Enter') certClaim(); });
+  qs('#btnGoDon').addEventListener('click', () => {
+    closeModal('sessionModal');
+    const s = sessById(state.openSess);
+    document.querySelector('#donasi').scrollIntoView({behavior: 'smooth'});
+    if (s) qs('#donSession').value = s.id;
+  });
+  qs('#btnAdminTop').addEventListener('click', openAdmin);
+  qs('#btnAdmClose').addEventListener('click', () => closeModal('adminOverlay'));
+  qs('#adminOverlay').addEventListener('click', e => { if (e.target === qs('#adminOverlay')) closeModal('adminOverlay'); });
+  qs('#btnAdmLogout').addEventListener('click', adminLogout);
+  qs('#btnLogin').addEventListener('click', adminLogin);
+  qsa('#admNav button').forEach(b => b.addEventListener('click', () => admTab(b.dataset.atab)));
+  qs('#lmPin').addEventListener('click', () => { state.loginMode = 'pin'; lmUI(); });
+  qs('#lmCloud').addEventListener('click', () => { state.loginMode = 'cloud'; lmUI(); });
+  qs('#alPinIn').addEventListener('keydown', e => { if (e.key === 'Enter') adminLogin(); });
+  qs('#alPass').addEventListener('keydown', e => { if (e.key === 'Enter') adminLogin(); });
+  qs('#btnBurger').addEventListener('click', () => qs('#mainNav').classList.toggle('open'));
+  qsa('#mainNav a').forEach(a => a.addEventListener('click', () => qs('#mainNav').classList.remove('open')));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const open = qsa('.modal-overlay.open');
+      if (open.length) { open.forEach(m => m.classList.remove('open')); document.body.style.overflow = ''; }
+    }
+  });
+  qs('#donCustom').addEventListener('input', () => {
+    if (qs('#donCustom').value) { state.donAmount = 0; qsa('#donPresets .preset').forEach(p => p.classList.remove('on')); }
+  });
+}
+function lmUI() {
+  qs('#lmPin').classList.toggle('on', state.loginMode === 'pin');
+  qs('#lmCloud').classList.toggle('on', state.loginMode === 'cloud');
+  qs('#alPinWrap').style.display = state.loginMode === 'pin' ? '' : 'none';
+  qs('#alCloudWrap').style.display = state.loginMode === 'cloud' ? '' : 'none';
+}
+async function init() {
+  SB.boot();
+  lmUI();
+  await refreshAll();
+  setBadge();
+  renderAll();
+  SB.watchRealtime();
+  wire();
+  if (!SB.on && SB.reason) console.info('[EduNusa] ' + SB.reason);
+}
+init();
+</script>
+</body>
+</html>
