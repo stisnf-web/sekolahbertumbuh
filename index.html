@@ -655,6 +655,7 @@ footer{background:#0f172a;color:#cbd5e1;padding:52px 0 0;margin-top:30px}
     <div class="admin-top">
       <h2>⚙️ Panel Admin EduNusa</h2>
       <div class="sp">
+        <span id="admUserBadge" class="badge" style="display:none;background:rgba(239,68,68,.5);color:#fff">⛔ belum login</span>
         <span id="admModeBadge" class="badge" style="background:rgba(255,255,255,.2);color:#fff">demo</span>
         <button class="btn btn-sm" id="btnAdmLogout" style="display:none">Keluar</button>
         <button class="btn btn-sm" id="btnAdmClose">✕ Tutup</button>
@@ -945,13 +946,13 @@ const state = {
   sessions: [], modules: [], regs: [], dons: [], certs: [], testis: [], posts: [], reqs: [],
   cfg: Object.assign({}, DEFAULT_CFG),
   filterCat: 'Semua', openSess: null, claimCert: null,
-  donAmount: 0, reqPick: new Set(), loginMode: 'pin', adminAuthed: false, admTab: 'dash',
+  donAmount: 0, reqPick: new Set(), loginMode: 'pin', adminAuthed: false, adminEmail: '', admTab: 'dash',
   editing: {sesi:null, modul:null, media:null}
 };
 
 /* ---------------- Supabase engine (dual mode) ---------------- */
 const SB = {
-  on: false, client: null, ch: null, reason: '',
+  on: false, client: null, ch: null, reason: '', _authOkAt: 0,
   boot() {
     let saved = null;
     try { saved = JSON.parse(localStorage.getItem('edunusa_sb_cfg') || 'null'); } catch(e) {}
@@ -963,23 +964,47 @@ const SB = {
     try { this.client = supabase.createClient(url, key); }
     catch(e) { this.off('Koneksi Supabase gagal: ' + e.message + ' — Mode Demo aktif'); return; }
     this.on = true;
-    /* Task 11 fix: verifikasi sesi admin sungguhan, hapus flag palsu */
-    this.client.auth.getSession().then(({data}) => {
-      if (data && data.session) { state.adminAuthed = true; }
-      else {
-        state.adminAuthed = false;
-        try { sessionStorage.removeItem('edunusa_admin'); } catch(e) {}
-      }
-    }).catch(() => {});
+    /* Task 13 fix: getUser() memvalidasi token KE SERVER (getSession bisa percaya token kedaluwarsa) */
+    this.client.auth.getUser().then(({data, error}) => {
+      const ok = !error && data && data.user;
+      state.adminAuthed = ok;
+      if (ok) { this._authOkAt = Date.now(); state.adminEmail = data.user.email || ''; }
+      else { try { sessionStorage.removeItem('edunusa_admin'); } catch(e) {} }
+      setAuthBadge();
+    }).catch(() => { setAuthBadge(); });
   },
   off(reason) { this.on = false; this.reason = reason || ''; },
   friendlyError(e) {
     const m = String((e && e.message) || e || '');
-    if (/row-level security|42501/i.test(m)) return 'Aksi ditolak keamanan database (RLS). Tekan Keluar, lalu masuk kembali di panel Admin dengan EMAIL + PASSWORD akun Supabase Anda.';
+    if (/row-level security|42501/i.test(m)) return 'Aksi ditolak keamanan database (RLS). Solusi 2 langkah: (1) Jalankan edunusa-supabase-v2.1-fix.sql di SQL Editor Supabase — policy INSERT belum ada; (2) Tekan Keluar, lalu login ulang panel Admin dengan EMAIL + PASSWORD.';
     if (/jwt|expired|token|invalid session/i.test(m)) return 'Sesi login kedaluwarsa. Silakan Keluar lalu login ulang di panel Admin.';
     if (/duplicate key/i.test(m)) return 'Data sudah ada (duplikat).';
     if (/failed to fetch|network/i.test(m)) return 'Jaringan terputus dari Supabase. Periksa koneksi internet.';
     return m || 'Terjadi kesalahan tak terduga.';
+  },
+  rlsErr(e) { if (/row-level security|42501|jwt|expired|token/i.test(String((e && e.message) || e || ''))) this._authOkAt = 0; },
+  authFailMsg() { return 'Sesi admin tidak valid — tekan Keluar, lalu login ulang dengan EMAIL + PASSWORD akun Supabase.'; },
+  /* Task 13: pastikan sesi admin benar-benar sah (divalidasi server) sebelum aksi tulis admin */
+  async ensureAdmin(silent) {
+    if (!this.on) return true;
+    if (Date.now() - (this._authOkAt || 0) < 60000) return true;
+    try {
+      const {data, error} = await this.client.auth.getUser();
+      if (error || !data || !data.user) throw new Error('tanpa sesi');
+      this._authOkAt = Date.now();
+      state.adminAuthed = true; state.adminEmail = data.user.email || '';
+      setAuthBadge();
+      return true;
+    } catch(e) {
+      state.adminAuthed = false;
+      try { sessionStorage.removeItem('edunusa_admin'); } catch(_) {}
+      setAuthBadge();
+      if (!silent) {
+        toast('Sesi admin tidak valid / sudah berakhir. Silakan login ulang (email + password).', 'warn');
+        if (qs('#adminOverlay') && qs('#adminOverlay').classList.contains('open')) showAdminLogin();
+      }
+      return false;
+    }
   },
   async list(t) {
     if (this.on) {
@@ -991,8 +1016,10 @@ const SB = {
   },
   async insert(t, obj) {
     if (this.on) {
+      /* form pengunjung (regs/dons/reqs/testis) bebas; tabel khusus admin wajib sesi sah */
+      if (['sessions','modules','certs','posts','config'].indexOf(t) > -1 && !(await this.ensureAdmin(true))) throw new Error(this.authFailMsg());
       const {data, error} = await this.client.from(PREFIX + t).insert(obj).select();
-      if (error) throw new Error(this.friendlyError(error));
+      if (error) { this.rlsErr(error); throw new Error(this.friendlyError(error)); }
       return (data && data[0]) || obj;
     }
     const arr = demoAll(t);
@@ -1002,8 +1029,9 @@ const SB = {
   },
   async update(t, id, patch) {
     if (this.on) {
+      if (!(await this.ensureAdmin(true))) throw new Error(this.authFailMsg());
       const {data, error} = await this.client.from(PREFIX + t).update(patch).eq('id', id).select();
-      if (error) throw new Error(this.friendlyError(error));
+      if (error) { this.rlsErr(error); throw new Error(this.friendlyError(error)); }
       return (data && data[0]) || null;
     }
     const arr = demoAll(t);
@@ -1013,8 +1041,9 @@ const SB = {
   },
   async remove(t, id) {
     if (this.on) {
+      if (!(await this.ensureAdmin(true))) throw new Error(this.authFailMsg());
       const {error} = await this.client.from(PREFIX + t).delete().eq('id', id);
-      if (error) throw new Error(this.friendlyError(error));
+      if (error) { this.rlsErr(error); throw new Error(this.friendlyError(error)); }
       return true;
     }
     demoSave(t, demoAll(t).filter(x => String(x.id) !== String(id)));
@@ -1035,9 +1064,10 @@ const SB = {
   async saveConfig(patch) {
     try { writeCfgMerge(patch); } catch(e) {}
     if (this.on) {
+      if (!(await this.ensureAdmin(false))) return false;
       const rows = Object.keys(patch).map(k => ({key: k, value: patch[k]}));
       const {error} = await this.client.from(PREFIX + 'config').upsert(rows, {onConflict: 'key'});
-      if (error) { toast(this.friendlyError(error), 'err'); return false; }
+      if (error) { this.rlsErr(error); toast(this.friendlyError(error), 'err'); return false; }
     }
     return true;
   },
@@ -1112,7 +1142,8 @@ function logoHTML(cls) {
 function renderBrand() {
   qs('#brandBox').innerHTML = logoHTML() + '<div><div class="brand-name">Edu<span>Nusa</span></div><div class="brand-sub">Pelatihan · Donasi · Aplikasi</div></div>';
   qs('#footBrand').innerHTML = logoHTML() + '<b>Edu<span>Nusa</span></b>';
-  try { qs('#favicon').href = cfg('site_logo') || qs('#favicon').getAttribute('href'); } catch(e) {}
+  try { if (!renderBrand._favDef) renderBrand._favDef = qs('#favicon').getAttribute('href');
+        qs('#favicon').href = cfg('site_logo') || renderBrand._favDef; } catch(e) {}
 }
 function renderFooter() {
   const wa = cfg('wa_number');
@@ -1628,16 +1659,22 @@ function openAdmin() {
   qs('#admModeBadge').textContent = SB.on ? '☁️ cloud' : '💾 demo';
   qs('#lmCloud').style.display = SB.on ? '' : 'none';
   qs('#alHint').innerHTML = SB.on
-    ? 'Mode Cloud aktif — masuk dengan <b>email &amp; password akun Supabase</b> Anda (Authentication → Users).'
+    ? 'Mode Cloud aktif — masuk dengan <b>email &amp; password akun Supabase</b> Anda. Belum punya akun? Buat di Dashboard Supabase → Authentication → Users → <b>Add user</b> (aktifkan Auto Confirm).'
     : 'Mode Demo aktif — masuk dengan PIN <b>admin123</b>.';
+  setAuthBadge();
   if (SB.on) {
-    /* Task 11 fix: selalu verifikasi sesi Supabase yang sebenarnya */
+    /* Task 11+13 fix: verifikasi sesi ke SERVER (getUser), bukan sekadar token lokal */
     showAdminLogin();
-    SB.client.auth.getSession().then(({data}) => {
-      if (data && data.session) { state.adminAuthed = true; showAdminPanel(); }
-      else {
+    SB.client.auth.getUser().then(({data, error}) => {
+      if (!error && data && data.user) {
+        state.adminAuthed = true; SB._authOkAt = Date.now();
+        state.adminEmail = data.user.email || '';
+        setAuthBadge();
+        showAdminPanel();
+      } else {
         state.adminAuthed = false;
         try { sessionStorage.removeItem('edunusa_admin'); } catch(e) {}
+        setAuthBadge();
         showAdminLogin();
       }
     });
@@ -1657,14 +1694,25 @@ function showAdminPanel() {
   qs('#btnAdmLogout').style.display = '';
   admTab(state.admTab || 'dash');
 }
+/* Task 13: badge status login admin di header panel */
+function setAuthBadge() {
+  const b = qs('#admUserBadge'); if (!b) return;
+  if (!SB.on) { b.style.display = 'none'; return; }
+  b.style.display = '';
+  b.textContent = state.adminAuthed ? ('👤 ' + (state.adminEmail || 'admin')) : '⛔ belum login';
+  b.style.background = state.adminAuthed ? 'rgba(16,185,129,.45)' : 'rgba(239,68,68,.5)';
+}
 async function adminLogin() {
   if (SB.on) {
     const email = normEmail(qs('#alEmail').value), pass = qs('#alPass').value;
     if (!validEmail(email) || !pass) { toast('Isi email & password akun Supabase', 'warn'); return; }
     try {
-      const {error} = await SB.client.auth.signInWithPassword({email, password: pass});
+      const {data, error} = await SB.client.auth.signInWithPassword({email, password: pass});
       if (error) { toast(SB.friendlyError(error), 'err'); return; }
       state.adminAuthed = true;
+      state.adminEmail = (data && data.user && data.user.email) || email;
+      SB._authOkAt = Date.now();
+      setAuthBadge();
       sessionStorage.setItem('edunusa_admin', '1');
       toast('Selamat datang, Admin! ☁️', 'ok');
       showAdminPanel();
@@ -1679,9 +1727,11 @@ async function adminLogin() {
   }
 }
 async function adminLogout() {
-  state.adminAuthed = false;
+  state.adminAuthed = false; state.adminEmail = '';
+  SB._authOkAt = 0;
   try { sessionStorage.removeItem('edunusa_admin'); } catch(e) {}
   if (SB.on && SB.client) { try { await SB.client.auth.signOut(); } catch(e) {} }
+  setAuthBadge();
   toast('Anda telah keluar.', 'ok');
   showAdminLogin();
 }
@@ -2183,13 +2233,14 @@ function renderAdmSet(M) {
     /* supabase */
     '<div class="form-card"><h4>☁️ Koneksi Supabase</h4>' +
       '<p class="hint">Status: <b>' + (SB.on ? '☁️ tersambung' : '💾 mode demo') + (SB.reason ? ' — ' + esc(SB.reason) : '') + '</b></p>' +
+      (SB.on ? '<p class="hint">Sesi admin: <b>' + (state.adminAuthed ? '✅ login sebagai ' + esc(state.adminEmail || 'admin') : '⛔ belum login — tekan Keluar, lalu masuk dengan email &amp; password') + '</b></p>' : '') +
       '<label class="f-lab">Project URL</label><input class="f-in" id="setSbUrl" value="' + esc((saved && saved.url) || CONFIG.SB_URL) + '">' +
       '<label class="f-lab">Anon Key (public — aman untuk frontend dengan RLS)</label><input class="f-in" id="setSbKey" type="password" placeholder="tempel ANON KEY Anda di sini" value="' + esc((saved && saved.key) || CONFIG.SB_KEY || '') + '">' +
       '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">' +
         '<button class="btn btn-teal" id="btnSbSave">💾 Simpan &amp; Muat Ulang</button>' +
         '<button class="btn btn-line" id="btnSbOff">' + (localStorage.getItem('edunusa_sb_off') === '1' ? '▶️ Aktifkan Cloud' : '⏸️ Paksa Mode Demo') + '</button>' +
       '</div>' +
-      '<p class="hint" style="margin-top:8px">Jalankan <b>edunusa-supabase.sql v2.0</b> di Supabase SQL Editor terlebih dulu. Anon Key ada di Supabase → Project Settings → API.</p></div>';
+      '<p class="hint" style="margin-top:8px">Setup: jalankan <b>edunusa-supabase-v2.sql</b> + <b>edunusa-supabase-v2.1-fix.sql</b> (perbaikan RLS — mencegah pesan merah saat menyimpan) di SQL Editor. Anon Key ada di Project Settings → API.</p></div>';
   qs('#btnSiteSave').onclick = async () => {
     const ok = await SB.saveConfig({
       wa_number: qs('#setWa').value.trim() || DEFAULT_CFG.wa_number,
